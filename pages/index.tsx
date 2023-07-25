@@ -34,38 +34,49 @@ export default function Index(props: IndexProps) {
           </Box>
 
           <Box margin="8">
-            <Heading as="h2" marginTop="16" marginBottom="4">
-              {eventsTitle}
-            </Heading>
             {!events && <Loading />}
-            <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing="20px">
-              {events &&
-                events.map((event: EventPreviewType) => (
-                  <EventCard
-                    key={event.id}
-                    event={event}
-                  />
-                ))}
-            </SimpleGrid>
-            <Heading as="h2" marginTop="16" marginBottom="4">
-              {onlineCoursesTitle}
-            </Heading>
+            {
+              events.length !== 0 &&
+              <>
+                <Heading as="h2" marginTop="16" marginBottom="4">
+                  {eventsTitle}
+                </Heading>
+                <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing='5'>
+                  {events &&
+                    events.map((event: EventPreviewType) => (
+                      <EventCard
+                        key={event.id}
+                        event={event}
+                      />
+                    ))}
+                </SimpleGrid>
+              </>
+            }
+
             {!onlinecourses && <Loading />}
-            <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing="20px">
-              {onlinecourses &&
-                onlinecourses.map((onlineCourse: OnlineCoursePreviewType) => (
-                  <OnlineCourseCard
-                    key={onlineCourse.id}
-                    onlineCourse={onlineCourse}
-                  />
-                ))}
-            </SimpleGrid>
+            {
+              onlinecourses.length !== 0 &&
+              <>
+                <Heading as="h2" marginTop="16" marginBottom="4">
+                  {onlineCoursesTitle}
+                </Heading>
+                <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing="20px">
+                  {onlinecourses &&
+                    onlinecourses.map((onlineCourse: OnlineCoursePreviewType) => (
+                      <OnlineCourseCard
+                        key={onlineCourse.id}
+                        onlineCourse={onlineCourse}
+                      />
+                    ))}
+                </SimpleGrid>
+              </>
+            }
           </Box>
         </main>
-      </Layout>
+      </Layout >
     </>
   );
-}
+};
 
 export async function getStaticProps({ locale }: { locale: string }) {
   // Data
@@ -105,4 +116,4 @@ export async function getStaticProps({ locale }: { locale: string }) {
     },
     revalidate: 1, // In seconds
   };
-}
+};

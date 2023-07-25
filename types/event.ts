@@ -1,4 +1,5 @@
 import { EVENT_STATUS, EVENT_TYPE } from 'const';
+import { HTMLString } from 'types';
 
 type ValueOf<T> = T[keyof T];
 
@@ -9,17 +10,17 @@ export type EventTypeType = ValueOf<typeof EVENT_TYPE>;
 // Event Preview (card)
 export type EventPreviewType = {
   category: string | null;
-  city: string | null;
-  dateEnd: string | null;
+  city: string;
+  dateEnd: string;
   dateStart: string;
   description: string;
   featured: boolean;
   id: number;
-  lastRegistrationDate: string | null;
-  location: string | null;
+  lastRegistrationDate: string;
+  location: string;
   onDemand: boolean;
-  practicalInformation: string | null;
-  program: string | null;
+  practicalInformation: HTMLString | null;
+  program: HTMLString;
   slug: string;
   status: EventStatusType;
   title: string;

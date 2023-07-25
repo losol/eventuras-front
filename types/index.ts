@@ -14,3 +14,4 @@ export type {
 export type { OrganisationSettingType } from './organization';
 export type { OnlineCoursePreviewType } from './online-course';
 export type { LocalesType } from './locale';
+export type { HTMLString } from './common';
