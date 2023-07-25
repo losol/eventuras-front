@@ -5,7 +5,7 @@ import { CalendarIcon } from '@chakra-ui/icons';
 import { EventStatusBadge } from 'components';
 import { EventPreviewType } from 'types';
 
-const EventCard = memo(({ event }: { event: EventPreviewType }) => {
+const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }) {
   const {
     id,
     category,
