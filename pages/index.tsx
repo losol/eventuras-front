@@ -1,13 +1,13 @@
-import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react';
-import { EventCard, Layout, Loading } from 'components';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import getT from 'next-translate/getT';
-import { EventType, LocalesType, OnlineCourseType } from 'types';
+import { useRouter } from 'next/router';
+import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react';
+import { EventCard, Layout, Loading, OnlineCourseCard } from 'components';
+import { EventPreviewType, LocalesType, OnlineCoursePreviewType } from 'types';
 
 type IndexProps = {
-  events: EventType[];
-  onlinecourses: OnlineCourseType[];
+  events: EventPreviewType[];
+  onlinecourses: OnlineCoursePreviewType[];
   locales: LocalesType;
 };
 
@@ -40,12 +40,10 @@ export default function Index(props: IndexProps) {
             {!events && <Loading />}
             <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing="20px">
               {events &&
-                events.map((item: EventType) => (
+                events.map((event: EventPreviewType) => (
                   <EventCard
-                    key={item.id}
-                    title={item.title}
-                    description={item.description}
-                    href={`/event/${item.id}`}
+                    key={event.id}
+                    event={event}
                   />
                 ))}
             </SimpleGrid>
@@ -55,12 +53,10 @@ export default function Index(props: IndexProps) {
             {!onlinecourses && <Loading />}
             <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing="20px">
               {onlinecourses &&
-                onlinecourses.map((onlineCourse: OnlineCourseType) => (
-                  <EventCard
+                onlinecourses.map((onlineCourse: OnlineCoursePreviewType) => (
+                  <OnlineCourseCard
                     key={onlineCourse.id}
-                    title={onlineCourse.name}
-                    description={onlineCourse.description}
-                    href={`/onlinecourse/${onlineCourse.id}`}
+                    onlineCourse={onlineCourse}
                   />
                 ))}
             </SimpleGrid>
