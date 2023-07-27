@@ -1,7 +1,7 @@
 export type AccessTokenType = string | null | undefined;
 
 export type UserType = {
-  id: string;
+  id: number;
   email: string;
   name: string;
   phoneNumber?: string;

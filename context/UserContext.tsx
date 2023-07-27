@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import { UserType } from 'types';
 
 const initialUser: UserType = {
-  id: '',
+  id: -1, // -1 for fast development. TODO: Change after do Auth task
   email: '',
   name: '',
   accessToken: '',
@@ -21,9 +21,9 @@ export const UserContext = createContext<UserContextValue>({
 });
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<UserType>(initialUser); // Set the correct type for useState
+  const [user, setUser] = useState<UserType>(initialUser);
   const { data: session } = useSession();
-  const { data: userDetails } = useSWR<UserType | undefined>(session ? '/api/getUserProfile' : ''); // Set the correct type for useSWR
+  const { data: userDetails } = useSWR<UserType | undefined>(session ? '/api/getUserProfile' : '');
 
   const updateUser = (updated_user: UserType) => {
     setUser(updated_user);
