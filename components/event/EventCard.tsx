@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import NextLink from 'next/link';
 import { Text, Card, CardBody, CardHeader, Heading, CardFooter, Box, Badge, Button, Flex } from '@chakra-ui/react';
 import { CalendarIcon } from '@chakra-ui/icons';
-import { EventStatusBadge } from 'components';
+import { EventCardHeader, EventMetas } from 'components';
 import { EventPreviewType } from 'types';
 
 const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }) {
@@ -21,23 +21,21 @@ const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }
     type,
   } = event;
 
+  // TODO: Write function to map through passed metas, return string[] and memorize. Add to event detail pages
   const metas = useMemo(
-    () => [type, category].filter(meta => meta !== null),
+    () => {
+      let metas: string[] = [];
+      type !== null && metas.push(type);
+      category !== null && metas.push(category);
+      return metas;
+    },
     [type, category]
   );
 
   return (
     <Card
     >
-      <Flex justifyContent='space-between' alignItems='center'>
-        {
-          featured &&
-          <Badge colorScheme='orange' mt={2} ml={2}>
-            Featured
-          </Badge>
-        }
-        <EventStatusBadge status={status} />
-      </Flex>
+      <EventCardHeader featured={featured} status={status} />
       <CardHeader pb='0'>
         <NextLink href={`/events/${id}`}>
           <Heading as='h3' size='lg' mb='2' noOfLines={2}>
@@ -58,21 +56,7 @@ const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }
           {description}
         </Text>
         {
-          metas.length !== 0 &&
-          <Text fontSize='sm' mb='1' color='blackAlpha.600' display='flex' alignItems='baseline'>
-            {
-              metas.map((meta, index) => {
-                const isNotLast = index !== metas.length - 1;
-                // TODO: After create event page. Tink. Maybe, extract it into separate component
-                return (
-                  <Box mr={2} as='span' key={index}>
-                    {meta}
-                    {isNotLast && '•'}
-                  </Box>
-                );
-              })
-            }
-          </Text>
+          metas.length !== 0 && <EventMetas metas={metas} />
         }
       </CardBody>
       <CardFooter display='block' pt='0'>

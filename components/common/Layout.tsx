@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import { Header } from 'components';
 import { ReactNode } from 'react';
 
@@ -10,7 +11,9 @@ const Layout = (props: LayoutProps) => {
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <Box py={10}>
+        {children}
+      </Box>
     </>
   );
 };
