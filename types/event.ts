@@ -19,10 +19,13 @@ export type EventPreviewType = {
   lastRegistrationDate: string;
   location: string;
   onDemand: boolean;
-  practicalInformation: HTMLString | null;
-  program: HTMLString;
   slug: string;
   status: EventStatusType;
   title: string;
   type: EventTypeType;
+};
+
+export interface EventDetailType extends EventPreviewType {
+  practicalInformation: HTMLString | null;
+  program: HTMLString;
 };

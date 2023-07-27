@@ -5,13 +5,13 @@ import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { EventCard, Layout, Loading, OnlineCourseCard } from 'components';
 import { EventPreviewType, LocalesType, OnlineCoursePreviewType } from 'types';
 
-type IndexProps = {
+type IndexPageProps = {
   events: EventPreviewType[];
   onlinecourses: OnlineCoursePreviewType[];
   locales: LocalesType;
 };
 
-export default function Index(props: IndexProps) {
+export default function IndexPage(props: IndexPageProps) {
   const { events, onlinecourses, locales } = props;
   const { demoTitleLocale, demoTextLocale } = locales.component;
   const { eventsTitle, onlineCoursesTitle } = locales.common;

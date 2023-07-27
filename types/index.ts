@@ -1,13 +1,14 @@
 export type {
   EventStatusType,
   EventPreviewType,
+  EventDetailType,
   EventTypeType,
 } from './event';
 
-export type { UserType } from './user';
+export type { UserType, AccessTokenType } from './user';
 
 export type {
-  UserEventRegistrationType,
+  RegistrationForEventType,
   RegistrationType,
 } from './registration';
 

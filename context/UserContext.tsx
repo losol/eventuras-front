@@ -3,28 +3,36 @@ import { createContext, ReactNode, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { UserType } from 'types';
 
-// interface UserProviderProps {
-//   user: UserType; // TODO: Check does UserType fit API response
-//   updateUser: (updated_user: UserType) => void;
-// };
+const initialUser: UserType = {
+  id: '',
+  email: '',
+  name: '',
+  accessToken: '',
+};
 
-export const UserContext = createContext({});
+interface UserContextValue {
+  user: UserType;
+  updateUser: (updated_user: UserType) => void;
+}
+
+export const UserContext = createContext<UserContextValue>({
+  user: initialUser,
+  updateUser: () => { },
+});
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  // Quick fix. TODO: With fresh mind think how to handle initialState, perfectly null
-  const initialUser = {
-    email: '',
-    name: '',
-    // phoneNumber: '',
-  };
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState<UserType>(initialUser); // Set the correct type for useState
   const { data: session } = useSession();
-  const { data: userDetails } = useSWR(session ? '/api/getUserProfile' : '');
+  const { data: userDetails } = useSWR<UserType | undefined>(session ? '/api/getUserProfile' : ''); // Set the correct type for useSWR
+
   const updateUser = (updated_user: UserType) => {
     setUser(updated_user);
   };
+
   useEffect(() => {
-    setUser(userDetails);
+    if (userDetails) {
+      setUser(userDetails);
+    }
   }, [userDetails]);
 
   return (
