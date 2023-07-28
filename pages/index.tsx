@@ -26,19 +26,19 @@ export default function IndexPage(props: IndexPageProps) {
 
       <Layout>
         <main>
-          <Box margin="8">
-            <Heading as="h2" marginTop="16" marginBottom="4">
+          <Box padding="8">
+            <Heading as="h2" marginBottom="4">
               {demoTitleLocale} {locale?.toUpperCase()}
             </Heading>
             <Text>{demoTextLocale}</Text>
           </Box>
 
-          <Box margin="8">
+          <Box padding="8">
             {!events && <Loading />}
             {
               events.length !== 0 &&
               <>
-                <Heading as="h2" marginTop="16" marginBottom="4">
+                <Heading as="h2" marginBottom="4">
                   {eventsTitle}
                 </Heading>
                 <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing='5'>

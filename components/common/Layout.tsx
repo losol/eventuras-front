@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Grid } from '@chakra-ui/react';
 import { Header } from 'components';
 import { ReactNode } from 'react';
 
@@ -9,12 +9,15 @@ type LayoutProps = {
 const Layout = (props: LayoutProps) => {
   const { children } = props;
   return (
-    <>
+    <Grid
+      templateRows='auto 1fr'
+      h='100vh'
+    >
       <Header />
-      <Box py={10}>
+      <Box overflowY='auto'>
         {children}
       </Box>
-    </>
+    </Grid>
   );
 };
 

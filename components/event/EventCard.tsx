@@ -1,9 +1,10 @@
 import { memo, useMemo } from 'react';
 import NextLink from 'next/link';
-import { Text, Card, CardBody, CardHeader, Heading, CardFooter, Box, Badge, Button, Flex } from '@chakra-ui/react';
+import { Text, Card, CardBody, CardHeader, Heading, CardFooter, Button } from '@chakra-ui/react';
 import { CalendarIcon } from '@chakra-ui/icons';
 import { EventCardHeader, EventMetas } from 'components';
 import { EventPreviewType } from 'types';
+import { formatMetas } from 'helpers';
 
 const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }) {
   const {
@@ -21,14 +22,8 @@ const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }
     type,
   } = event;
 
-  // TODO: Write function to map through passed metas, return string[] and memorize. Add to event detail pages
   const metas = useMemo(
-    () => {
-      let metas: string[] = [];
-      type !== null && metas.push(type);
-      category !== null && metas.push(category);
-      return metas;
-    },
+    () => formatMetas(type, category),
     [type, category]
   );
 
@@ -63,7 +58,8 @@ const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }
         <Button
           as={NextLink}
           href={`/events/${id}`}
-          colorScheme='gray'
+          colorScheme='teal'
+          variant='solid'
           width='full'
         >
           Vis kurset &raquo;

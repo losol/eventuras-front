@@ -4,10 +4,10 @@ import useSWR from 'swr';
 import { UserType } from 'types';
 
 const initialUser: UserType = {
-  id: -1, // -1 for fast development. TODO: Change after do Auth task
-  email: '',
-  name: '',
-  accessToken: '',
+  id: null,
+  email: null,
+  name: null,
+  accessToken: null,
 };
 
 interface UserContextValue {

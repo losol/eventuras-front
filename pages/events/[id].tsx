@@ -1,15 +1,24 @@
 import { useContext, useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import parse from 'html-react-parser';
-import {
-  Button, Card, CardBody, CardHeader, Container, Heading, useDisclosure, Text, Grid, GridItem, Flex, Badge
-} from '@chakra-ui/react';
-import { AlertModal, EventStatusBadge, Layout } from 'components';
-import { EventCardHeader } from 'components';
+import { Button, Card, CardBody, CardHeader, Container, Heading, useDisclosure, Text, Grid, GridItem, GridItemProps, Box } from '@chakra-ui/react';
+import { CalendarIcon } from '@chakra-ui/icons';
+import { EventCardHeader, AlertModal, Layout, EventMetas } from 'components';
+import { EventDetailType } from 'types';
 import { UserContext } from 'context';
 import { registerForEvent } from 'services';
-import { EventDetailType } from 'types';
-import { CalendarIcon } from '@chakra-ui/icons';
+import { formatMetas } from 'helpers';
+
+// Column Styles
+const gridGap = 6;
+const scrollColumnProps: GridItemProps = {
+  h: '100%',
+  overflowY: 'auto',
+  pt: 8,
+  pb: 12,
+  mr: -gridGap, // Scrollbar outside of column content
+  pr: gridGap, // Scrollbar outside of column content
+};
 
 type EventDetailPageProps = {
   event: EventDetailType;
@@ -32,19 +41,18 @@ const EventDetailPage = (props: EventDetailPageProps) => {
     program,
   } = props.event;
 
+  const metas = formatMetas(type, category);
+
   const { data: session, status: sessionStatus } = useSession();
   const { user } = useContext(UserContext);
 
   const [modal, setModal] = useState({ title: '', text: '' });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleRegistrationEventRequest = async () => {
+  const register = async () => {
     // TODO: Auth task. Run it only if the data is not undefined and not null
     await registerForEvent(
-      {
-        userId: user.id,
-        eventId: id,
-      },
+      { userId: user.id, eventId: id },
       session?.user.accessToken
     );
     setModal({
@@ -54,40 +62,23 @@ const EventDetailPage = (props: EventDetailPageProps) => {
     onOpen();
   };
 
-  const handleLoginAndRegistrationEvent = async () => {
-    try {
-      await signIn('auth0');
-      localStorage.setItem('EVENT_REGISTRATION_AFTER_LOGIN', 'true');
-    } catch (e) {
-      console.log(e);
-    }
+  const loginAndRegister = async () => {
+    const res = await signIn('auth0');
+    res?.ok && register();
+    // TODO: Think. Maybe: handle res.error - alert
   };
-
-  useEffect(() => {
-    if (
-      user &&
-      user.id &&
-      localStorage.getItem('EVENT_REGISTRATION_AFTER_LOGIN')
-    ) {
-      handleRegistrationEventRequest();
-      localStorage.removeItem('EVENT_REGISTRATION_AFTER_LOGIN');
-    }
-  }, [user]);
-
-  console.log(props.event);
 
   return (
     <Layout>
-      <Container maxW='container.xl'>
+      <Container maxW='container.xl' h='100%'>
         <Grid
-          gap={6}
+          gap={gridGap}
           templateColumns='repeat(12, 1fr)'
+          h='100%'
         >
-          <GridItem colSpan={[null, 7, 8]}>
-
+          <GridItem colSpan={[null, 7, 8]} {...scrollColumnProps}>
             <Card mb={6} id='main'>
               <EventCardHeader featured={featured} status={status} />
-
               <CardHeader pb='0'>
                 <Heading as='h1' mb='3'>
                   {title}
@@ -104,10 +95,12 @@ const EventDetailPage = (props: EventDetailPageProps) => {
                 </Text>
               </CardHeader>
               <CardBody>
-                <Text>
+                <Text mb={3}>
                   {description}
                 </Text>
-
+                {
+                  metas.length !== 0 && <EventMetas metas={metas} />
+                }
               </CardBody>
             </Card>
 
@@ -118,9 +111,8 @@ const EventDetailPage = (props: EventDetailPageProps) => {
                 </Heading>
               </CardHeader>
               <CardBody>
-                <Text>
-                  {parse(program)}
-                </Text>
+                {/* Do not wrap into Chakra Text. It is HTML string from server. To prevent hydration error <p> in <p> */}
+                {parse(program)}
               </CardBody>
             </Card>
 
@@ -133,69 +125,44 @@ const EventDetailPage = (props: EventDetailPageProps) => {
                   </Heading>
                 </CardHeader>
                 <CardBody>
-                  <Text>
-                    {parse(practicalInformation)}
-                  </Text>
+                  {/* Do not wrap into Chakra Text. It is HTML string from server. To prevent hydration error <p> in <p> */}
+                  {parse(practicalInformation)}
                 </CardBody>
               </Card>
             }
 
-            {!session && (
-              <Button
-                colorScheme="teal"
-                mt={5}
-                isLoading={sessionStatus === 'loading'}
-                onClick={handleLoginAndRegistrationEvent}
-              >
-                Login and register for event
-              </Button>
-            )}
-            {session && (
-              <Button
-                colorScheme="teal"
-                mt={5}
-                // isLoading={sessionStatus === 'loading'}
-                onClick={handleRegistrationEventRequest}
-              >
-                Register for event
-              </Button>
-            )}
-
-
+            <Button
+              colorScheme='teal'
+              isLoading={sessionStatus === 'loading'}
+              onClick={session ? register : loginAndRegister}
+            >
+              Register
+            </Button>
           </GridItem>
 
-          <GridItem colSpan={[null, 5, 4]}>
+          <GridItem colSpan={[null, 5, 4]} {...scrollColumnProps}>
             <Card>
-              <CardHeader pb='0'>
-                <Heading as='h1' mb='3'>
-                  Right
-                </Heading>
-              </CardHeader>
               <CardBody>
-
                 <Button as='a' width='full' mb={2} href='#main'>
                   Main Info
                 </Button>
                 <Button as='a' width='full' mb={2} href='#program'>
                   Program
                 </Button>
-
                 {
                   practicalInformation &&
                   <Button as='a' width='full' mb={2} href='#pratical-information'>
                     Pratical Information
                   </Button>
                 }
-
                 <Button width='full' mt={4} colorScheme='teal'>
                   Register
                 </Button>
 
-
               </CardBody>
             </Card>
-
           </GridItem>
+
         </Grid>
       </Container>
 
@@ -205,7 +172,6 @@ const EventDetailPage = (props: EventDetailPageProps) => {
         title={modal.title}
         text={modal.text}
       />
-
     </Layout>
   );
 };

@@ -35,13 +35,15 @@ const Header = () => {
       justify="space-between"
       wrap="wrap"
       padding="1.5rem"
-      bg={useColorModeValue('gray.100', 'gray.900')}
-      color={useColorModeValue('gray.600', 'gray.300')}
+      bg='white'
+      shadow='sm'
     >
       <Flex align="center" mr={5}>
-        <Heading as="h1" size="lg" letterSpacing={'-.1rem'}>
-          Eventuras
-        </Heading>
+        <NextLink href='/'>
+          <Heading as="h1" size="lg" letterSpacing={'-.1rem'}>
+            Eventuras
+          </Heading>
+        </NextLink>
       </Flex>
 
       <div>

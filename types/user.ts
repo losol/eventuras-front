@@ -1,11 +1,11 @@
 export type AccessTokenType = string | null | undefined;
 
 export type UserType = {
-  id: number;
-  email: string;
-  name: string;
-  phoneNumber?: string;
-  accessToken: string;
+  id: number | null;
+  email: string | null;
+  name: string | null;
+  phoneNumber?: string | null;
+  accessToken: string | null;
 };
 
 // From next-auth
