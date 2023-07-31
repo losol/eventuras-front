@@ -1,4 +1,5 @@
-import { EventPreviewType, UserType } from 'types';
+import { UserType } from 'types';
+import { EventDto } from '@losol/eventuras';
 
 // Partials
 type EventIdType = number;
@@ -19,5 +20,5 @@ export type RegistrationType = {
   certificateId: number;
   notes: string;
   user: UserType;
-  event: EventPreviewType;
+  event: EventDto;
 };

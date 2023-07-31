@@ -3,10 +3,11 @@ import getT from 'next-translate/getT';
 import { useRouter } from 'next/router';
 import { Box, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import { EventCard, Layout, Loading, OnlineCourseCard } from 'components';
-import { EventPreviewType, LocalesType, OnlineCoursePreviewType } from 'types';
+import { LocalesType, OnlineCoursePreviewType } from 'types';
+import { EventDto } from '@losol/eventuras';
 
 type IndexPageProps = {
-  events: EventPreviewType[];
+  events: EventDto[];
   onlinecourses: OnlineCoursePreviewType[];
   locales: LocalesType;
 };
@@ -43,7 +44,7 @@ export default function IndexPage(props: IndexPageProps) {
                 </Heading>
                 <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing='5'>
                   {events &&
-                    events.map((event: EventPreviewType) => (
+                    events.map((event: EventDto) => (
                       <EventCard
                         key={event.id}
                         event={event}

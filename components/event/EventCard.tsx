@@ -3,10 +3,10 @@ import NextLink from 'next/link';
 import { Text, Card, CardBody, CardHeader, Heading, CardFooter, Button } from '@chakra-ui/react';
 import { CalendarIcon } from '@chakra-ui/icons';
 import { EventCardHeader, EventMetas } from 'components';
-import { EventPreviewType } from 'types';
+import { EventDto } from '@losol/eventuras';
 import { formatMetas } from 'helpers';
 
-const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }) {
+const EventCard = memo(function EventCard({ event }: { event: EventDto }) {
   const {
     id,
     category,
@@ -28,8 +28,7 @@ const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }
   );
 
   return (
-    <Card
-    >
+    <Card>
       <EventCardHeader featured={featured} status={status} />
       <CardHeader pb='0'>
         <NextLink href={`/events/${id}`}>
@@ -39,7 +38,12 @@ const EventCard = memo(function EventCard({ event }: { event: EventPreviewType }
         </NextLink>
         <Text fontSize='sm' mb='1' color='blackAlpha.800' fontWeight='bold' display='flex' alignItems='center'>
           <CalendarIcon mr='2' />
-          {dateStart} - {dateEnd}
+          {/* TODO: Delete check when API data will be defined */}
+          {dateStart && dateEnd &&
+            <>
+              {dateStart} - {dateEnd}
+            </>
+          }
         </Text>
         <Text fontSize='sm' mb='1' color='blackAlpha.600' fontWeight='bold'>
           {city && city + ', '}

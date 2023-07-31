@@ -1,10 +1,11 @@
 import { Badge, Flex } from '@chakra-ui/react';
 import { EventStatusBadge } from 'components';
-import { EventStatusType } from 'types';
+import { EventInfoStatus } from '@losol/eventuras';
 
 type EventCardHeaderProps = {
-  featured: boolean;
-  status: EventStatusType;
+  // TODO: Delete undefined? when API will be ready
+  featured?: boolean;
+  status?: EventInfoStatus;
 };
 
 const EventCardHeader = (props: EventCardHeaderProps) => {

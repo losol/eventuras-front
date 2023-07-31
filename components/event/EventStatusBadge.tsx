@@ -1,13 +1,22 @@
 import { Box, Badge } from '@chakra-ui/react';
 import { EventInfoStatus } from '@losol/eventuras';
 
-const EventStatusBadge = ({ status }: { status: EventInfoStatus }) => {
+type EventStatusBadgeProps = {
+  // TODO: Delete undefined? when API will be ready
+  status?: EventInfoStatus;
+};
+
+const EventStatusBadge = (props: EventStatusBadgeProps) => {
+  const { status } = props;
+
+  const index = status ? status : EventInfoStatus.PLANNED; // TODO: Delete status check ? when API data will be defined
+
   const {
     // Default properties
     colorScheme = 'gray',
     variant = 'solid',
     text = status,
-  } = badges[status]; // Specific properties
+  } = badges[index]; // Specific properties // TODO: Change [index] to [status] when API data will be defined
 
   return (
     <Box textAlign='right'>

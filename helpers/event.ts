@@ -1,4 +1,5 @@
-type MetaType = string | null;
+type MetaType = string | null | undefined;
+
 export function formatMetas(...metas: MetaType[]): string[] {
-  return metas.filter((meta): meta is string => meta !== null);
+  return metas.filter((meta): meta is string => !!meta);
 };

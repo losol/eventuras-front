@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import parse from 'html-react-parser';
-import { Button, Card, CardBody, CardHeader, Container, Heading, useDisclosure, Text, Grid, GridItem, GridItemProps, Box } from '@chakra-ui/react';
+import { Button, Card, CardBody, CardHeader, Container, Heading, useDisclosure, Text, Grid, GridItem, GridItemProps } from '@chakra-ui/react';
 import { CalendarIcon } from '@chakra-ui/icons';
 import { EventCardHeader, AlertModal, Layout, EventMetas } from 'components';
-import { EventDetailType } from 'types';
+import { EventDto } from '@losol/eventuras';
 import { UserContext } from 'context';
 import { registerForEvent } from 'services';
 import { formatMetas } from 'helpers';
@@ -21,7 +21,7 @@ const scrollColumnProps: GridItemProps = {
 };
 
 type EventDetailPageProps = {
-  event: EventDetailType;
+  event: EventDto;
 };
 
 const EventDetailPage = (props: EventDetailPageProps) => {
@@ -50,16 +50,18 @@ const EventDetailPage = (props: EventDetailPageProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const register = async () => {
-    // TODO: Auth task. Run it only if the data is not undefined and not null
-    await registerForEvent(
-      { userId: user.id, eventId: id },
-      session?.user.accessToken
-    );
-    setModal({
-      title: 'Welcome!',
-      text: `Welcome to ${title}`,
-    });
-    onOpen();
+    // TODO: Delete check when API data will be defined
+    if (!!user.id && !!id) {
+      await registerForEvent(
+        { userId: user.id, eventId: id },
+        session?.user.accessToken
+      );
+      setModal({
+        title: 'Welcome!',
+        text: `Welcome to ${title}`,
+      });
+      onOpen();
+    };
   };
 
   const loginAndRegister = async () => {
@@ -86,7 +88,12 @@ const EventDetailPage = (props: EventDetailPageProps) => {
 
                 <Text mb='2' color='blackAlpha.800' fontWeight='bold' display='flex' alignItems='center'>
                   <CalendarIcon mr='2' />
-                  {dateStart} - {dateEnd}
+                  {/* TODO: Delete check when API data will be defined */}
+                  {dateStart && dateEnd &&
+                    <>
+                      {dateStart} - {dateEnd}
+                    </>
+                  }
                 </Text>
 
                 <Text mb='2' color='blackAlpha.600' fontWeight='bold'>
@@ -104,17 +111,20 @@ const EventDetailPage = (props: EventDetailPageProps) => {
               </CardBody>
             </Card>
 
-            <Card id='program'>
-              <CardHeader pb='0'>
-                <Heading as='h2' mb='3'>
-                  Program
-                </Heading>
-              </CardHeader>
-              <CardBody>
-                {/* Do not wrap into Chakra Text. It is HTML string from server. To prevent hydration error <p> in <p> */}
-                {parse(program)}
-              </CardBody>
-            </Card>
+            {/* TODO: Delete check when API data will be defined */}
+            {program &&
+              <Card id='program'>
+                <CardHeader pb='0'>
+                  <Heading as='h2' mb='3'>
+                    Program
+                  </Heading>
+                </CardHeader>
+                <CardBody>
+                  {/* Do not wrap into Chakra Text. It is HTML string from server. To prevent hydration error <p> in <p> */}
+                  {parse(program)}
+                </CardBody>
+              </Card>
+            }
 
             {
               practicalInformation &&
@@ -177,7 +187,7 @@ const EventDetailPage = (props: EventDetailPageProps) => {
 };
 
 type Params = {
-  id: string;
+  id?: string; // TODO: Delete check when API data will be defined
 };
 
 export async function getStaticProps({ params }: { params: Params }) {
@@ -197,8 +207,9 @@ export async function getStaticPaths() {
   const events = await res.json();
 
   // TODO: loop through pagination?
-  const paths = events.data.map((event: EventDetailType) => ({
+  const paths = events.data.map((event: EventDto) => ({
     params: {
+      // TODO: Fix error:'event.id' is possibly 'undefined' when API data will be defined
       id: event.id.toString(),
     },
   }));

@@ -37,8 +37,8 @@ const EventAdmin = () => {
   const [selectedParticipantGroups, updateSelectedParticipantGroups] = useState(
     ['Participant']
   );
-  const [emailBody, setEmailBody] = useState < string > ('');
-  const [subject, setSubject] = useState < string > ('');
+  const [emailBody, setEmailBody] = useState('');
+  const [subject, setSubject] = useState('');
 
   const registrationsColumns = useMemo(
     () => [
@@ -183,7 +183,7 @@ const EventAdmin = () => {
     );
   }
 
-  if (!loading && !session)
+  if (status !== 'loading' && !session)
     return (
       <Layout>
         <Unauthorized />
