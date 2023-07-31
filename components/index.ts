@@ -20,5 +20,4 @@ export {
 } from './common';
 
 export { EmailDrawer, EmailEditor, MarkdownEditor } from './communication';
-
 export { OnlineCourseCard } from './online-course';
