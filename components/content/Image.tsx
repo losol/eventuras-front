@@ -1,42 +1,35 @@
-import { default as NextImage } from 'next/image';
+import { Switch as HeadlessSwitch } from '@headlessui/react';
+import React from 'react';
 
-import { Text } from '@/components/content';
-import { cn } from '@/lib/utils';
-
-export type ImageProps = {
-  src: string;
-  alt?: string;
-  caption?: string | null | undefined;
-  imgClassName?: string;
-  figureClassName?: string;
-  figCaptionClassName?: string;
-  width?: number;
-  height?: number;
-  priority?: true;
+type SwitchProps = {
+  label?: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
 };
 
-const Image = (props: ImageProps) => {
+const Switch = (props: SwitchProps): React.JSX.Element => {
   return (
-    <figure className={cn(props.figureClassName ?? 'max-w-lg py-8')}>
-      <NextImage
-        className={cn(props.imgClassName ?? 'h-auto max-w-full')}
-        src={props.src}
-        alt={props.alt ?? ''}
-        width={props.width}
-        height={props.height}
-        {...(props.priority && { priority: true })}
-      />
-      {props.caption && (
-        <figcaption
-          className={cn(
-            props.figCaptionClassName ?? 'mt-2 text-center text-sm text-gray-500 dark:text-gray-400'
-          )}
+    <HeadlessSwitch.Group>
+      <div className="flex items-center">
+        <HeadlessSwitch.Label className="mr-4 dark:text-gray-100">
+          {props.label}
+        </HeadlessSwitch.Label>
+        <HeadlessSwitch
+          checked={props.checked}
+          onChange={props.onChange}
+          className={`${
+            props.checked ? 'bg-gray-700 dark:bg-gray-700' : 'bg-gray-900 dark:bg-teal-800'
+          } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
         >
-          <Text>{props.caption}</Text>
-        </figcaption>
-      )}
-    </figure>
+          <span
+            className={`${
+              props.checked ? 'translate-x-6' : 'translate-x-1'
+            } inline-block h-4 w-4 rounded-full bg-white transition-transform`}
+          />
+        </HeadlessSwitch>
+      </div>
+    </HeadlessSwitch.Group>
   );
 };
 
-export default Image;
+export default Switch;

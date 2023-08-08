@@ -1,7 +1,6 @@
+import { DarkmodeToggle } from 'components/layout';
+import { siteConfig } from 'config/site';
 import Link from 'next/link';
-
-import ThemeToggle from '@/components/ThemeToggle';
-import { siteConfig } from '@/config/site';
 
 const Footer = () => {
   return (
@@ -10,7 +9,7 @@ const Footer = () => {
         <span className="text-sm text-gray-800 dark:text-gray-200 sm:text-center">
           {siteConfig.name}
         </span>
-        <ThemeToggle />
+        <DarkmodeToggle />
         <ul className="mt-3 flex flex-wrap items-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
           <li>
             <Link

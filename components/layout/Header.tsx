@@ -1,10 +1,10 @@
 'use client';
 
+import { Button } from 'components/inputs';
 import { UserMenu } from 'components/layout';
 import Link from 'next/link';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
-import { Button } from '@/components/ui/button';
 import { siteConfig } from '@/config/site';
 
 const Header = () => {
@@ -26,11 +26,7 @@ const Header = () => {
         </Link>
         <nav>
           {session ? <UserMenu signOut={signOut} name={userName} /> : null}
-          {session ? null : (
-            <Button variant="outline" onClick={handleSignIn}>
-              Login
-            </Button>
-          )}
+          {session ? null : <Button onClick={handleSignIn}>Login</Button>}
         </nav>
       </div>
     </header>
