@@ -17,7 +17,7 @@ const cookies: Partial<CookiesOptions> = {
     },
   },
 };
-const nextOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt',
   },
@@ -37,6 +37,12 @@ const nextOptions: AuthOptions = {
   ],
 
   callbacks: {
+    async session({ session, token }) {
+      if (session) {
+        session = Object.assign({}, session, { accessToken: token.accessToken });
+      }
+      return session;
+    },
     async jwt({ token, user, account }: { token: any; user: any; account: any }) {
       // Initial sign in
       if (account && user) {
@@ -105,5 +111,5 @@ async function refreshAccessToken(token: any) {
     };
   }
 }
-const authGetter = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, nextOptions);
+const authGetter = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, authOptions);
 export default authGetter;

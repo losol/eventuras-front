@@ -7,4 +7,4 @@
 
 export { default } from 'next-auth/middleware';
 
-export const config = { matcher: ['/events/:id/register'] };
+export const config = { matcher: ['/admin', '/events/:id/register'] };
