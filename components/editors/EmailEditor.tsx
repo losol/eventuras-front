@@ -1,19 +1,18 @@
-import { Checkbox, Input, Stack } from '@mantine/core';
-import { Heading } from 'components/content';
-import { Dispatch, SetStateAction } from 'react';
+// import { SetStateAction } from 'react';
 
-interface EmailEditorProps {
-  participantGroups: string[];
-  selectedRecipientGroups: string[];
-  handleParticipantGroupsChange: (group: string) => void;
-  setEmailBody: Dispatch<SetStateAction<string>>;
-  setSubject: Dispatch<SetStateAction<string>>;
-}
+// interface EmailEditorProps {
+//   // participantGroups: string[];
+//   // selectedRecipientGroups: string[];
+//   // handleParticipantGroupsChange: (group: string) => void;
+//   // //setEmailBody: Dispatch<SetStateAction<string>>;
+//   // //setSubject: Dispatch<SetStateAction<string>>;
+// }
 
-const EmailEditor = (props: EmailEditorProps): JSX.Element => {
+const EmailEditor = (): JSX.Element => {
   return (
     <>
-      <Stack>
+      <p>Need to redo this</p>
+      {/* <Text>
         <Checkbox.Group
           defaultValue={['participants']}
           label="Select recipient"
@@ -41,7 +40,7 @@ const EmailEditor = (props: EmailEditorProps): JSX.Element => {
         />
 
         <Heading as="h2">Content</Heading>
-      </Stack>
+      </Stack> */}
     </>
   );
 };
