@@ -49,7 +49,6 @@ export const authOptions: AuthOptions = {
         if (!account.refresh_token) {
           console.error('No refresh token in account object :(');
         }
-        console.log({ user, account });
         return {
           ...token,
           accessToken: account.access_token,

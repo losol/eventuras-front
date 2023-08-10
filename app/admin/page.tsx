@@ -22,7 +22,6 @@ export default async function AdminPage() {
   try {
     const response = await UsersService.getV3Users1({});
     users = response.data ?? [];
-    console.log('users', users);
   } catch (error) {
     console.error('Error fetching users:', error);
   }
