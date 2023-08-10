@@ -8,7 +8,7 @@ declare module 'next-auth' {
       image?: string;
       id: string;
     };
-    accessToken?: accessToken;
+    accessToken?: string;
     expires: string;
   }
 }

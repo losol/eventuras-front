@@ -2,6 +2,7 @@ import 'styles/globals.css';
 
 import { OpenAPI } from '@losol/eventuras';
 import type { Metadata } from 'next';
+import { Session } from 'next-auth';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 
@@ -13,11 +14,15 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
+  const session: Session | null = await getServerSession(authOptions);
 
   if (!session) {
     return <div>No access...</div>;
   }
+
+  // Create a client side sessionObject without the accessToken
+  const clientSideSession: Session = { ...session };
+  delete clientSideSession.accessToken;
 
   OpenAPI.BASE = process.env.API_BASE_URL!;
   OpenAPI.VERSION = process.env.NEXT_PUBLIC_API_VERSION!;
@@ -26,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en">
       <body>
-        <Providers session={session}>{children}</Providers>
+        <Providers session={clientSideSession}>{children}</Providers>
       </body>
     </html>
   );
