@@ -1,4 +1,4 @@
-import { Container, Footer, Header } from 'components/layout';
+import { Footer, Header } from 'components/layout';
 import { ReactNode } from 'react';
 
 type LayoutProps = {
@@ -10,9 +10,7 @@ const Layout = (props: LayoutProps) => {
   return (
     <>
       <Header />
-      <main>
-        <Container>{children}</Container>
-      </main>
+      <main>{children}</main>
       <Footer />
     </>
   );
