@@ -46,7 +46,6 @@
     "swr": "^2.2.0"
   },
   "devDependencies": {
-
     "@next/eslint-plugin-next": "^13.4.13",
     "@storybook/addon-a11y": "^7.2.2",
     "@storybook/addon-essentials": "^7.2.2",
