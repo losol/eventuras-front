@@ -26,7 +26,7 @@ export default function Index(props: IndexProps) {
           <Heading as="h2">{eventsTitle}</Heading>
           <div className="grid grid-cols-4 gap-4">
             {events?.map((event: EventDto) => (
-              <Link key={event.id} href={`/events/${event.id}`}>
+              <Link key={event.id} href={`/event/${event.id}`}>
                 <Card key={event.id}>
                   <Card.Heading>{event.title}</Card.Heading>
                   <Card.Text>{event.description!}</Card.Text>
