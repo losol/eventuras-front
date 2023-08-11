@@ -1,5 +1,5 @@
 import { EventsService } from '@losol/eventuras';
-import { Layout } from 'components/layout';
+import { Container, Layout } from 'components/layout';
 
 import EventDetails from './(components)/EventDetails';
 
@@ -39,7 +39,9 @@ const EventInfoPage: React.FC<EventInfoProps> = async ({ params }) => {
 
   return (
     <Layout>
-      <EventDetails eventinfo={eventinfo} />
+      <Container>
+        <EventDetails eventinfo={eventinfo} />
+      </Container>
     </Layout>
   );
 };
