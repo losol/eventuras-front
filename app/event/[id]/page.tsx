@@ -1,0 +1,47 @@
+import { EventsService } from '@losol/eventuras';
+import { Layout } from 'components/layout';
+
+import EventDetails from './(components)/EventDetails';
+
+type EventInfoProps = {
+  params: {
+    id: number;
+  };
+};
+
+async function getEvents() {
+  return await EventsService.getV3Events({}).catch(e => {
+    console.error('Error fetching events:', e);
+    return null;
+  });
+}
+
+async function getEvent(id: number) {
+  return await EventsService.getV3Events1({ id }).catch(e => {
+    console.error('Error fetching specific event with ID:', id, e);
+    return null;
+  });
+}
+
+export async function generateStaticParams() {
+  const events = await getEvents();
+  if (!events || !Array.isArray(events)) {
+    return [];
+  }
+  return events.map(event => ({ id: event.id.toString() }));
+}
+
+const EventInfoPage: React.FC<EventInfoProps> = async ({ params }) => {
+  const eventinfo = await getEvent(params.id);
+  console.log('eventinfo', eventinfo);
+
+  if (!eventinfo) return <div>Event not found</div>;
+
+  return (
+    <Layout>
+      <EventDetails eventinfo={eventinfo} />
+    </Layout>
+  );
+};
+
+export default EventInfoPage;
