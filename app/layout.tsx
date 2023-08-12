@@ -4,7 +4,7 @@ import { OpenAPI } from '@losol/eventuras';
 import type { Metadata } from 'next';
 import { Session } from 'next-auth';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { authOptions } from 'utils/authOptions';
 
 import Providers from './Providers';
 

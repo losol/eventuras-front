@@ -1,27 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { AuthOptions, CookiesOptions } from 'next-auth/core/types';
+import { AuthOptions } from 'next-auth/core/types';
 import NextAuth from 'next-auth/next';
 import Auth0Provider from 'next-auth/providers/auth0';
 
 const AUTH0_TOKEN_URL = `https://${process.env.AUTH0_DOMAIN}/oauth/token?`;
 
-const cookies: Partial<CookiesOptions> = {
-  sessionToken: {
-    name: `next-auth.session-token`,
-    options: {
-      httpOnly: true,
-      sameSite: 'none',
-      path: '/',
-      domain: process.env.NEXTAUTH_URL,
-      secure: true,
-    },
-  },
-};
 export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt',
   },
-  cookies: cookies,
   providers: [
     Auth0Provider({
       clientId: process.env.AUTH0_CLIENT_ID!,
@@ -37,18 +23,13 @@ export const authOptions: AuthOptions = {
   ],
 
   callbacks: {
-    async session({ session, token }) {
-      if (session) {
-        session = Object.assign({}, session, { accessToken: token.accessToken });
-      }
-      return session;
-    },
     async jwt({ token, user, account }: { token: any; user: any; account: any }) {
       // Initial sign in
       if (account && user) {
         if (!account.refresh_token) {
           console.error('No refresh token in account object :(');
         }
+        console.log({ user, account });
         return {
           ...token,
           accessToken: account.access_token,
@@ -110,5 +91,6 @@ async function refreshAccessToken(token: any) {
     };
   }
 }
-const authGetter = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, authOptions);
-export default authGetter;
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
