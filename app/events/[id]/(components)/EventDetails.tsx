@@ -28,7 +28,7 @@ export default function EventDetails({ eventinfo }: EventProps) {
       {eventinfo?.description ?? null}
 
       <div>
-        <Link href={`/event/${eventinfo.id}/register`}>Register for event</Link>
+        <Link href={`/events/${eventinfo.id}/register`}>Register for event</Link>
       </div>
 
       {eventinfo?.moreInformation ? (
