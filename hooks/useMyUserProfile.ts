@@ -2,12 +2,8 @@ import { OpenAPI } from '@losol/eventuras';
 import { useEffect, useState } from 'react';
 import { UserProfile } from 'types/UserProfile';
 
-const getAPIUserProfile = () => {
-  const user = fetch(`${OpenAPI.BASE}/${process.env.NEXT_PUBLIC_API_VERSION}/users/me`).then(r =>
-    r.json()
-  );
-  console.log(user);
-};
+const getAPIUserProfile = () =>
+  fetch(`${OpenAPI.BASE}/${process.env.NEXT_PUBLIC_API_VERSION}/users/me`).then(r => r.json());
 
 const useMyUserProfile = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
