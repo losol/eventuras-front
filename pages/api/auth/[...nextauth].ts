@@ -12,7 +12,7 @@ const cookies: Partial<CookiesOptions> = {
       httpOnly: true,
       sameSite: 'none',
       path: '/',
-      domain: process.env.NEXT_PUBLIC_DOMAIN,
+      domain: process.env.NEXTAUTH_URL,
       secure: true,
     },
   },
