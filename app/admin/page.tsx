@@ -7,6 +7,7 @@ import AdminEventList from './AdminEventList';
 import UserList from './UserList';
 
 const ORGANIZATION_ID: number = parseInt(process.env.NEXT_PUBLIC_ORGANIZATION_ID as string) ?? 1;
+export const dynamic = 'force-dynamic';
 
 export default async function AdminPage() {
   let eventinfo: EventDto[] = [];
