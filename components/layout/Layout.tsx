@@ -9,7 +9,7 @@ const Layout = (props: LayoutProps) => {
   const { children } = props;
   return (
     <>
-      <Header />
+      <Header title="Eventuras" />
       <main id="main-content">{children}</main>
       <Footer />
     </>
