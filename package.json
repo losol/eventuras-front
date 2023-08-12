@@ -15,7 +15,7 @@
     "build-storybook": "storybook build"
   },
   "lint-staged": {
-    "**/*.(ts|tsx)": "tsc-files --noEmit",
+    "**/*.(ts|tsx)": "tsc -p ./tsconfig.json",
     "**/*.(ts|tsx|js)": [
       "eslint --fix",
       "prettier --cache --write"

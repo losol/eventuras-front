@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: 'A life with eventuras',
 };
 
+// Forces dynamic site generation
+export const dynamic = 'force-dynamic';
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session: Session | null = await getServerSession(authOptions);
 
@@ -22,7 +25,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   // Create a client side sessionObject without the accessToken
   const clientSideSession: Session = { ...session };
-  delete clientSideSession.accessToken;
+  if (clientSideSession.accessToken) {
+    delete clientSideSession.accessToken;
+  }
 
   OpenAPI.BASE = process.env.API_BASE_URL!;
   OpenAPI.VERSION = process.env.NEXT_PUBLIC_API_VERSION!;
