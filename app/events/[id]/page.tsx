@@ -35,8 +35,6 @@ export async function generateStaticParams() {
 
 const EventInfoPage: React.FC<EventInfoProps> = async ({ params }) => {
   const eventinfo = await getEvent(params.id);
-  console.log('eventinfo', eventinfo);
-
   if (!eventinfo) return <div>Event not found</div>;
 
   return (
