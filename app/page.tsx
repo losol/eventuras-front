@@ -1,4 +1,4 @@
-import { EventDto, EventsService } from '@losol/eventuras';
+import { EventDto, EventsService, OpenAPI } from '@losol/eventuras';
 import { EventGrid } from 'components/event';
 import { Container, Layout } from 'components/layout';
 
@@ -7,8 +7,12 @@ import { Heading, Text } from '../components/content';
 
 // Get events from eventuras
 const ORGANIZATION_ID: number = parseInt(process.env.NEXT_PUBLIC_ORGANIZATION_ID as string) ?? 1;
+export const dynamic = 'force-dynamic';
 
 export default async function Homepage() {
+  OpenAPI.BASE = process.env.API_BASE_URL!;
+  OpenAPI.VERSION = process.env.NEXT_PUBLIC_API_VERSION!;
+
   let eventinfos: EventDto[] = [];
   try {
     const response = await EventsService.getV3Events({

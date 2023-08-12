@@ -1,7 +1,9 @@
-import { EventsService } from '@losol/eventuras';
+import { EventsService, OpenAPI } from '@losol/eventuras';
 import { Container, Layout } from 'components/layout';
 
 import EventDetails from './(components)/EventDetails';
+OpenAPI.BASE = process.env.API_BASE_URL!;
+OpenAPI.VERSION = process.env.NEXT_PUBLIC_API_VERSION!;
 
 type EventInfoProps = {
   params: {
