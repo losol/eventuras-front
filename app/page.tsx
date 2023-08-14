@@ -6,7 +6,10 @@ import { Heading, Text } from '../components/content';
 // import Events from './Events';
 
 // Get events from eventuras
-const ORGANIZATION_ID: number = parseInt(process.env.NEXT_PUBLIC_ORGANIZATION_ID as string) ?? 1;
+const ORGANIZATION_ID: number =
+  process.env.NEXT_PUBLIC_ORGANIZATION_ID !== undefined
+    ? parseInt(process.env.NEXT_PUBLIC_ORGANIZATION_ID)
+    : 1;
 export const dynamic = 'force-dynamic';
 
 export default async function Homepage() {
