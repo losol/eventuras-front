@@ -29,7 +29,7 @@ export const authOptions: AuthOptions = {
     },
     async jwt({ token, user, account }: { token: any; user: any; account: any }) {
       if (account) {
-        Logger.info({ namespace: 'auth' }, { token, user, account });
+        Logger.info({ namespace: 'auth', developerOnly: true }, { token, user, account });
         token = Object.assign({}, token, {
           access_token: account.access_token,
           id_token: account.id_token,
