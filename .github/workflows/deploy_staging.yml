@@ -7,7 +7,7 @@ on:
     branches:
       - main
 jobs:
-  Deploy-Production:
+  Deploy-Staging:
     environment: staging
     runs-on: ubuntu-latest
     steps:
