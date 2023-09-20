@@ -1,1 +1,1 @@
-export const NOTIFICATION_STATE_KEY = 'notificationState';
+export const APP_NOTIFICATION_STATE_KEY = 'appNotificationState';

@@ -1,15 +1,8 @@
 import { atom } from 'recoil';
 
-import { NOTIFICATION_STATE_KEY } from './recoilKeys';
+import { AppNotification } from '@/types/appNotificationTypes';
 
-type NotificationType = 'success' | 'error' | 'info';
-
-interface Notification {
-  message: string;
-  type: NotificationType;
-}
-
-export const notificationState = atom<Notification[]>({
-  key: NOTIFICATION_STATE_KEY,
+export const appNotificationState = atom<AppNotification[]>({
+  key: 'appNotificationState',
   default: [],
 });
