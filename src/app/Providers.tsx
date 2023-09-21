@@ -4,7 +4,7 @@ import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { RecoilRoot } from 'recoil';
 
-import RecoilAppNotifications from '@/app/NotificationsProvider';
+import NotificationsProvider from '@/app/NotificationsProvider';
 import { UserProvider } from '@/context';
 import Environment from '@/utils/Environment';
 
@@ -23,7 +23,7 @@ export default function Providers({ children, session }: ProvidersProps) {
   OpenAPI.VERSION = Environment.NEXT_PUBLIC_API_VERSION;
   return (
     <RecoilRoot>
-      <RecoilAppNotifications />
+      <NotificationsProvider />
       <SessionProvider session={session}>
         <UserProvider>{children}</UserProvider>
       </SessionProvider>
