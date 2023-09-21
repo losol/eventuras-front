@@ -29,7 +29,7 @@ export const useAppNotifications = () => {
 
     if (expiresAfter !== 0) {
       setTimeout(() => {
-        removeAppNotification(id); // Call the removal function here
+        removeAppNotification(id);
       }, expiresAfter);
     }
   };
