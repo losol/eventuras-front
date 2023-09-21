@@ -11,19 +11,19 @@ const AppNotifications: React.FC = () => {
     <div>
       <Portal isOpen={appNotifications.length > 0}>
         <div className="fixed bottom-0 right-0 z-50 p-4">
-          {appNotifications.map(appNotifications => (
+          {appNotifications.map(appNotification => (
             <div
-              key={appNotifications.id}
+              key={appNotification.id}
               className={`m-2 p-4 rounded shadow-lg 
                             ${
-                              appNotifications.type === 'success'
+                              appNotification.type === 'success'
                                 ? 'bg-green-500 text-white'
-                                : appNotifications.type === 'error'
+                                : appNotification.type === 'error'
                                 ? 'bg-red-500 text-white'
                                 : 'bg-blue-500 text-white'
                             }`}
             >
-              {appNotifications.message}
+              {appNotification.message}
             </div>
           ))}
         </div>
