@@ -1,17 +1,24 @@
 import { useRecoilState } from 'recoil';
 
 import { appNotificationState } from '@/atoms/RecoilState';
-import { AppNotification } from '@/components/feedback/AppNotifications';
+import {
+  AppNotificationOptions,
+  AppNotificationType,
+} from '@/components/feedback/AppNotifications';
 
 export { AppNotificationType } from '@/components/feedback/AppNotifications';
 
 export const useAppNotifications = () => {
   const [appNotifications, setAppNotifications] = useRecoilState(appNotificationState);
 
-  const addAppNotification = (options: AppNotification) => {
-    const { id, message, type, expiresAfter = 5000 } = options;
+  const removeAppNotification = (id: number) => {
+    setAppNotifications(appNotifications => appNotifications.filter(n => n.id !== id));
+  };
 
-    const newAppNotification: AppNotification = {
+  const addAppNotification = (options: AppNotificationOptions) => {
+    const { id, message, type = AppNotificationType.INFO, expiresAfter = 5000 } = options;
+
+    const newAppNotification: AppNotificationOptions = {
       id,
       message,
       type,
@@ -22,13 +29,9 @@ export const useAppNotifications = () => {
 
     if (expiresAfter !== 0) {
       setTimeout(() => {
-        setAppNotifications(appNotifications => appNotifications.filter(n => n.id !== id));
+        removeAppNotification(id); // Call the removal function here
       }, expiresAfter);
     }
-  };
-
-  const removeAppNotification = (id: number) => {
-    setAppNotifications(appNotifications => appNotifications.filter(n => n.id !== id));
   };
 
   return {

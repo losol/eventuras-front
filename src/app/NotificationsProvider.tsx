@@ -2,8 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 
 import { appNotificationState } from '@/atoms/RecoilState';
-
-import AppNotifications from './AppNotifications';
+import AppNotifications from '@/components/feedback/AppNotifications';
 
 const RecoilAppNotifications: React.FC = () => {
   const appNotifications = useRecoilValue(appNotificationState);

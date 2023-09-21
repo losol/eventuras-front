@@ -8,15 +8,15 @@ export enum AppNotificationType {
   INFO = 'info',
 }
 
-export interface AppNotification {
+export interface AppNotificationOptions {
   id: number;
   message: string;
-  type: AppNotificationType;
+  type?: AppNotificationType;
   expiresAfter?: number;
 }
 
 interface AppNotificationsProps {
-  appNotifications?: AppNotification[];
+  appNotifications?: AppNotificationOptions[];
 }
 
 const AppNotifications: React.FC<AppNotificationsProps> = ({

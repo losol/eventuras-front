@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
-import { AppNotification } from '@/components/feedback/AppNotifications';
+import { AppNotificationOptions } from '@/components/feedback/AppNotifications';
 
-export const appNotificationState = atom<AppNotification[]>({
+export const appNotificationState = atom<AppNotificationOptions[]>({
   key: 'appNotificationState',
   default: [],
 });

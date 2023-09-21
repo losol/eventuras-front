@@ -4,7 +4,7 @@ import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { RecoilRoot } from 'recoil';
 
-import RecoilAppNotifications from '@/components/feedback/RecoilAppNotifications';
+import RecoilAppNotifications from '@/app/NotificationsProvider';
 import { UserProvider } from '@/context';
 import Environment from '@/utils/Environment';
 
