@@ -3,8 +3,7 @@ import React from 'react';
 
 import Button from '@/components/inputs/Button';
 import { Layout } from '@/components/layout';
-import { useAppNotifications } from '@/hooks/useAppNotifications';
-import { ERROR, INFO, SUCCESS } from '@/types/appNotificationTypes';
+import { AppNotificationType, useAppNotifications } from '@/hooks/useAppNotifications';
 
 const ToasterPage = () => {
   const { addAppNotification } = useAppNotifications();
@@ -17,8 +16,9 @@ const ToasterPage = () => {
         <Button
           onClick={() =>
             addAppNotification({
+              id: Date.now(),
               message: 'This stays for 2 seconds',
-              type: SUCCESS,
+              type: AppNotificationType.SUCCESS,
               expiresAfter: 2000,
             })
           }
@@ -28,8 +28,9 @@ const ToasterPage = () => {
         <Button
           onClick={() =>
             addAppNotification({
+              id: Date.now(),
               message: 'This stays for 4 seconds',
-              type: ERROR,
+              type: AppNotificationType.ERROR,
               expiresAfter: 4000,
             })
           }
@@ -39,8 +40,9 @@ const ToasterPage = () => {
         <Button
           onClick={() =>
             addAppNotification({
+              id: Date.now(),
               message: 'This stays for 6 seconds',
-              type: INFO,
+              type: AppNotificationType.INFO,
               expiresAfter: 6000,
             })
           }
@@ -49,7 +51,12 @@ const ToasterPage = () => {
         </Button>
         <Button
           onClick={() =>
-            addAppNotification({ message: 'This stays indefinitely', type: INFO, expiresAfter: 0 })
+            addAppNotification({
+              id: Date.now(),
+              message: 'This stays indefinitely',
+              type: AppNotificationType.INFO,
+              expiresAfter: 0,
+            })
           }
         >
           Indefinite Info

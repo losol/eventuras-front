@@ -1,21 +1,15 @@
-import crypto from 'crypto';
 import { useRecoilState } from 'recoil';
 
 import { appNotificationState } from '@/atoms/RecoilState';
-import { AppNotification } from '@/types/appNotificationTypes';
+import { AppNotification } from '@/components/feedback/AppNotifications';
 
-interface AddNotificationOptions {
-  message: string;
-  type: string;
-  expiresAfter?: number;
-}
+export { AppNotificationType } from '@/components/feedback/AppNotifications';
 
 export const useAppNotifications = () => {
   const [appNotifications, setAppNotifications] = useRecoilState(appNotificationState);
 
-  const addAppNotification = (options: AddNotificationOptions) => {
-    const { message, type, expiresAfter = 5000 } = options;
-    const id = crypto.randomBytes(16).toString('hex');
+  const addAppNotification = (options: AppNotification) => {
+    const { id, message, type, expiresAfter = 5000 } = options;
 
     const newAppNotification: AppNotification = {
       id,
@@ -33,7 +27,7 @@ export const useAppNotifications = () => {
     }
   };
 
-  const removeAppNotification = (id: string) => {
+  const removeAppNotification = (id: number) => {
     setAppNotifications(appNotifications => appNotifications.filter(n => n.id !== id));
   };
 

@@ -1,12 +1,27 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 
-import { appNotificationState } from '@/atoms/RecoilState';
 import { Portal } from '@/components/layout';
 
-const AppNotifications: React.FC = () => {
-  const appNotifications = useRecoilValue(appNotificationState);
+export enum AppNotificationType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  INFO = 'info',
+}
 
+export interface AppNotification {
+  id: number;
+  message: string;
+  type: AppNotificationType;
+  expiresAfter?: number;
+}
+
+interface AppNotificationsProps {
+  appNotifications?: AppNotification[];
+}
+
+const AppNotifications: React.FC<AppNotificationsProps> = ({
+  appNotifications = [], // defaults to empty array
+}) => {
   return (
     <div>
       <Portal isOpen={appNotifications.length > 0}>
