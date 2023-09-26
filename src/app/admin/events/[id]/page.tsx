@@ -1,6 +1,6 @@
 'use client';
 
-import EventEditor from '@/app/admin/components/EventEditor';
+import EventEditor from '@/app/admin/events/EventEditor';
 import { Loading } from '@/components/feedback';
 import { useEvent } from '@/hooks/apiHooks';
 
@@ -10,6 +10,6 @@ const EditEvent = ({ params }: { params: any }) => {
   if (loading) {
     return <Loading />;
   }
-  return <EventEditor event={event} />;
+  return <EventEditor eventinfo={event} />;
 };
 export default EditEvent;
