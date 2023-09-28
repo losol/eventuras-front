@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { createColumnHelper, DataTable } from '@/components/content';
-import MarkdownEditor from '@/components/editors/MarkdownEditor';
+import MarkdownEditor from '@/components/inputs/MarkdownEditor';
 import Button, { blueBlockClasses } from '@/components/inputs/Button';
 import { Drawer } from '@/components/layout';
+import { InputText } from '@/components/inputs/Input';
+import EventEmailer from '@/components/event/EventEmailer';
 const columnHelper = createColumnHelper<EventDto>();
 interface AdminEventListProps {
   eventinfo: EventDto[];
@@ -57,11 +59,7 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
           Send Notification Email to Participants
         </Drawer.Header>
         <Drawer.Body>
-          <MarkdownEditor />
-          <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
-            <Button className={`flex-auto justify-center m-1 ${blueBlockClasses}`}>Send</Button>
-            <Button className={`flex-auto justify-center m-1m ${blueBlockClasses}`}>Cancel</Button>
-          </div>
+          <EventEmailer eventTitle="This is an event" eventId={20} />
         </Drawer.Body>
         <Drawer.Footer>
           <></>
