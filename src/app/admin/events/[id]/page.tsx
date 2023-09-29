@@ -50,7 +50,7 @@ const EventDetailPage: React.FC<EventInfoProps> = ({ params }) => {
             </Button>
             <Drawer isOpen={emailDrawerOpen} onCancel={() => setEmailDrawerOpen(false)}>
               <Drawer.Header as="h3" className="text-black">
-                {event?.title}
+                {t('eventEmailer.title')}
               </Drawer.Header>
               <Drawer.Body>
                 <EventEmailer

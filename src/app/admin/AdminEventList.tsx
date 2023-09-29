@@ -59,7 +59,7 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
       {eventOpened !== null && (
         <Drawer isOpen={drawerIsOpen} onCancel={() => setEventOpened(null)}>
           <Drawer.Header as="h3" className="text-black">
-            {eventOpened?.title}
+            {t('eventEmailer.title')}
           </Drawer.Header>
           <Drawer.Body>
             <EventEmailer
