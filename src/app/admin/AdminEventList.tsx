@@ -6,24 +6,23 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { createColumnHelper, DataTable } from '@/components/content';
-import MarkdownEditor from '@/components/inputs/MarkdownEditor';
-import Button, { blueBlockClasses } from '@/components/inputs/Button';
-import { Drawer } from '@/components/layout';
-import { InputText } from '@/components/inputs/Input';
 import EventEmailer from '@/components/event/EventEmailer';
+import { Drawer } from '@/components/layout';
 const columnHelper = createColumnHelper<EventDto>();
 interface AdminEventListProps {
   eventinfo: EventDto[];
 }
 
 const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
-  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const [eventOpened, setEventOpened] = useState<EventDto | null>(null);
 
-  const actions = (
-    <>
-      <IconMailForward className="cursor-pointer" onClick={() => setDrawerIsOpen(true)} />
-    </>
-  );
+  const renderEventItemActions = (info: EventDto) => {
+    return (
+      <>
+        <IconMailForward className="cursor-pointer" onClick={() => setEventOpened(info)} />
+      </>
+    );
+  };
 
   const columns = [
     columnHelper.accessor('title', {
@@ -42,10 +41,10 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
     }),
     columnHelper.accessor('action', {
       header: 'Action',
-      cell: () => actions,
+      cell: info => renderEventItemActions(info.row.original),
     }),
   ];
-
+  const drawerIsOpen = eventOpened !== null;
   return (
     <>
       <DataTable
@@ -54,12 +53,16 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
         clientsidePaginationPageSize={250}
         clientsidePagination
       />
-      <Drawer isOpen={drawerIsOpen} onCancel={() => setDrawerIsOpen(false)}>
-        <Drawer.Header className="text-black">
-          Send Notification Email to Participants
+      <Drawer isOpen={drawerIsOpen} onCancel={() => setEventOpened(null)}>
+        <Drawer.Header as="h3" className="text-black">
+          {eventOpened?.title}
         </Drawer.Header>
         <Drawer.Body>
-          <EventEmailer eventTitle="This is an event" eventId={20} />
+          <EventEmailer
+            eventTitle="This is an event"
+            eventId={20}
+            onClose={() => setEventOpened(null)}
+          />
         </Drawer.Body>
         <Drawer.Footer>
           <></>

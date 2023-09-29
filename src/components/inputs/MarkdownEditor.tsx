@@ -40,4 +40,5 @@ const MarkdownEditor = React.forwardRef<HTMLTextAreaElement, MarkdownEditorProps
   );
 });
 
+MarkdownEditor.displayName = 'markdowneditor';
 export default MarkdownEditor;

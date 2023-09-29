@@ -60,14 +60,6 @@ const Drawer: DrawerComponent = (props: DrawerProps) => {
               Submit
             </Button>
           )}
-          {props.onCancel && (
-            <Button
-              onClick={props.onCancel}
-              className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent"
-            >
-              Cancel
-            </Button>
-          )}
         </div>
       </Drawer.Footer>
     );
@@ -85,6 +77,7 @@ const Drawer: DrawerComponent = (props: DrawerProps) => {
     'top-0',
     'right-0',
     'min-w-4/5',
+    'max-w-4/5',
     'h-full',
     'bg-gray-100',
     'overflow-auto',
@@ -105,7 +98,11 @@ const Drawer: DrawerComponent = (props: DrawerProps) => {
       />
       <section {...ariaHiddenProps} className={finalClasses}>
         {props.onCancel && (
-          <Button onClick={props.onCancel} className="absolute top-0 right-0 m-4 text-black">
+          <Button
+            onClick={props.onCancel}
+            className="absolute top-0 right-0 m-4 text-black"
+            variant="outline"
+          >
             <IconX />
           </Button>
         )}

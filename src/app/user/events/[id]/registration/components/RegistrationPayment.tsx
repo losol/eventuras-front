@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Heading } from '@/components/content';
 import { Button } from '@/components/inputs';
-import { InputText, defaultInputStyle } from '@/components/inputs/Input';
+import { defaultInputStyle, InputText } from '@/components/inputs/Input';
 import PaymentFormValues from '@/types/PaymentFormValues';
 import { UserProfile } from '@/types/UserProfile';
 

@@ -14,7 +14,6 @@ import Environment from '@/utils/Environment';
 import Logger from '@/utils/Logger';
 
 import AdminEventList from './AdminEventList';
-import EventEmailer from '@/components/event/EventEmailer';
 
 const ORGANIZATION_ID: number = parseInt(Environment.NEXT_PUBLIC_ORGANIZATION_ID);
 export const dynamic = 'force-dynamic';
