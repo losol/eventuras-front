@@ -101,7 +101,7 @@ const Drawer: DrawerComponent = (props: DrawerProps) => {
           <Button
             onClick={props.onCancel}
             className="absolute top-0 right-0 m-4 text-black"
-            variant="outline"
+            variant="secondary"
           >
             <IconX />
           </Button>

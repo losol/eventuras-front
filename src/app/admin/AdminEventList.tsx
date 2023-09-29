@@ -1,7 +1,7 @@
 'use client';
 
 import { EventDto } from '@losol/eventuras';
-import { IconMailForward } from '@tabler/icons-react';
+import { IconEditCircle, IconMailForward } from '@tabler/icons-react';
 import Link from 'next/link';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -20,18 +20,19 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
 
   const renderEventItemActions = (info: EventDto) => {
     return (
-      <>
-        <IconMailForward className="cursor-pointer" onClick={() => setEventOpened(info)} />
-      </>
+      <div className="flex flex-row">
+        <IconMailForward className="cursor-pointer m-1" onClick={() => setEventOpened(info)} />
+        <Link className="m-1" href={`/admin/events/${info.id}/edit`}>
+          <IconEditCircle />
+        </Link>
+      </div>
     );
   };
 
   const columns = [
     columnHelper.accessor('title', {
       header: t('eventColumns.title').toString(),
-      cell: info => (
-        <Link href={`/admin/events/${info.row.original.id}/edit`}> {info.getValue()}</Link>
-      ),
+      cell: info => <Link href={`/admin/events/${info.row.original.id}`}> {info.getValue()}</Link>,
     }),
     columnHelper.accessor('location', {
       header: t('eventColumns.location').toString(),
