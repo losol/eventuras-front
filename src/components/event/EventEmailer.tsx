@@ -1,4 +1,5 @@
 import { EmailNotificationDto, RegistrationStatus, RegistrationType } from '@losol/eventuras';
+import useTranslation from 'next-translate/useTranslation';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 import { AppNotificationType, useAppNotifications } from '@/hooks/useAppNotifications';
@@ -32,6 +33,8 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
     handleSubmit,
   } = useForm<EventEmailerFormValues>();
   const { addAppNotification } = useAppNotifications();
+  const { t } = useTranslation('admin');
+  const { t: common } = useTranslation('common');
 
   const onSubmitForm: SubmitHandler<EventEmailerFormValues> = async (
     data: EventEmailerFormValues
@@ -49,13 +52,13 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
     if (!result.ok) {
       addAppNotification({
         id: Date.now(),
-        message: 'Something went wrong, please try again later',
+        message: common('errors.fatalError.title'),
         type: AppNotificationType.ERROR,
       });
     } else {
       addAppNotification({
         id: Date.now(),
-        message: 'Success! The email notification was sent successfully',
+        message: t('eventEmailer.form.successFeedback'),
         type: AppNotificationType.SUCCESS,
       });
       //we are done, lets request a close
@@ -64,17 +67,17 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
   };
 
   return (
-    <form className="text-black" onSubmit={handleSubmit(onSubmitForm)}>
+    <form className="text-black w-72" onSubmit={handleSubmit(onSubmitForm)}>
       <div>
-        <Heading as="h4">Event</Heading>
+        <Heading as="h4">{common('event')}</Heading>
         <p>{eventTitle}</p>
       </div>
       <div className="relative z-10">
-        <label htmlFor="statusSelector">Status</label>
+        <label htmlFor="statusSelector">{t('eventEmailer.form.status.label')}</label>
         <Controller
           control={control}
           name="registrationStatus"
-          rules={{ required: 'Please Select at least one Status option' }}
+          rules={{ required: t('eventEmailer.form.status.feedbackNoInput') }}
           render={({ field: { onChange, onBlur, value } }) => {
             return (
               <MultiSelectDropdown
@@ -94,11 +97,11 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
         )}
       </div>
       <div className="relative z-9">
-        <label htmlFor="typeSelector">Type</label>
+        <label htmlFor="typeSelector">{t('eventEmailer.form.type.label')}</label>
         <Controller
           control={control}
           name="registrationTypes"
-          rules={{ required: 'Please Select at least one Type option' }}
+          rules={{ required: t('eventEmailer.form.type.feedbackNoInput') }}
           render={({ field: { onChange, onBlur, value } }) => {
             return (
               <MultiSelectDropdown
@@ -120,10 +123,10 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
       <div>
         <InputText
           {...register('subject', {
-            required: 'Email subject is required',
+            required: t('eventEmailer.form.subject.feedbackNoInput'),
           })}
-          label="Subject"
-          placeholder="Subject"
+          label={t('eventEmailer.form.subject.label')}
+          placeholder={t('eventEmailer.form.subject.label')}
           errors={errors}
           className={`${lightInputStyle}`}
         />
@@ -132,10 +135,10 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
         <div id="bodyEditor">
           <MarkdownEditor
             {...register('body', {
-              required: 'Email body is required',
+              required: t('eventEmailer.form.body.feedbackNoInput'),
             })}
-            label="Body"
-            placeholder="Email Body"
+            label={t('eventEmailer.form.body.label')}
+            placeholder={t('eventEmailer.form.body.label')}
             className={`${lightInputStyle}`}
             errors={errors}
           />
@@ -143,18 +146,18 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
       </div>
 
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
-        <Button className={`flex-auto justify-center m-1`} type="submit" variant="outline">
-          Send
+        <Button className={`flex-auto justify-center m-1`} type="submit" variant="secondary">
+          {common('buttons.send')}
         </Button>
         <Button
           onClick={e => {
             onClose();
             e.preventDefault();
           }}
-          variant="outline"
+          variant="secondary"
           className={`flex-auto justify-center m-1m`}
         >
-          Cancel
+          {common('buttons.cancel')}
         </Button>
       </div>
     </form>

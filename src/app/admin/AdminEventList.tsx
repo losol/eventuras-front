@@ -3,6 +3,7 @@
 import { EventDto } from '@losol/eventuras';
 import { IconMailForward } from '@tabler/icons-react';
 import Link from 'next/link';
+import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
 import { createColumnHelper, DataTable } from '@/components/content';
@@ -14,6 +15,7 @@ interface AdminEventListProps {
 }
 
 const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
+  const { t } = useTranslation('admin');
   const [eventOpened, setEventOpened] = useState<EventDto | null>(null);
 
   const renderEventItemActions = (info: EventDto) => {
@@ -26,21 +28,21 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
 
   const columns = [
     columnHelper.accessor('title', {
-      header: 'Title',
+      header: t('eventColumns.title').toString(),
       cell: info => (
         <Link href={`/admin/events/${info.row.original.id}/edit`}> {info.getValue()}</Link>
       ),
     }),
     columnHelper.accessor('location', {
-      header: 'Location',
+      header: t('eventColumns.location').toString(),
       cell: info => info.getValue(),
     }),
     columnHelper.accessor('dateStart', {
-      header: 'When',
+      header: t('eventColumns.when').toString(),
       cell: info => info.getValue(),
     }),
     columnHelper.accessor('action', {
-      header: 'Action',
+      header: t('eventColumns.actions').toString(),
       cell: info => renderEventItemActions(info.row.original),
     }),
   ];
