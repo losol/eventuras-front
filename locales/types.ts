@@ -96,6 +96,7 @@ export type LocalesAdmin = {
     actions: string;
   };
   eventEmailer: {
+    title: string;
     form: {
       status: FormField;
       type: FormField;

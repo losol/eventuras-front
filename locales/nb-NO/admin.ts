@@ -25,6 +25,7 @@ const LOCALES_ADMIN_NO: LocalesAdmin = {
     actions: 'Handlinger',
   },
   eventEmailer: {
+    title: 'Email participants',
     form: {
       body: {
         feedbackIncorrect: 'Needs at least 10 characters',
