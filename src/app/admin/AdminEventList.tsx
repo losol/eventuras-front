@@ -53,21 +53,23 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ eventinfo = [] }) => {
         clientsidePaginationPageSize={250}
         clientsidePagination
       />
-      <Drawer isOpen={drawerIsOpen} onCancel={() => setEventOpened(null)}>
-        <Drawer.Header as="h3" className="text-black">
-          {eventOpened?.title}
-        </Drawer.Header>
-        <Drawer.Body>
-          <EventEmailer
-            eventTitle="This is an event"
-            eventId={20}
-            onClose={() => setEventOpened(null)}
-          />
-        </Drawer.Body>
-        <Drawer.Footer>
-          <></>
-        </Drawer.Footer>
-      </Drawer>
+      {eventOpened !== null && (
+        <Drawer isOpen={drawerIsOpen} onCancel={() => setEventOpened(null)}>
+          <Drawer.Header as="h3" className="text-black">
+            {eventOpened?.title}
+          </Drawer.Header>
+          <Drawer.Body>
+            <EventEmailer
+              eventTitle={eventOpened.title!}
+              eventId={eventOpened.id!}
+              onClose={() => setEventOpened(null)}
+            />
+          </Drawer.Body>
+          <Drawer.Footer>
+            <></>
+          </Drawer.Footer>
+        </Drawer>
+      )}
     </>
   );
 };
