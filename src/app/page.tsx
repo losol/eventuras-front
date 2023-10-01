@@ -1,8 +1,9 @@
 import { EventDto, EventsService, OpenAPI } from '@losol/eventuras';
 
-import { Heading, Text } from '@/components/content';
+import { Heading } from '@/components/content';
 import { EventGrid } from '@/components/event';
 import { Container, Layout } from '@/components/layout';
+import Hero from '@/components/layout/Hero';
 import Environment, { EnvironmentVariables } from '@/utils/Environment';
 import Logger from '@/utils/Logger';
 
@@ -28,12 +29,7 @@ export default async function Homepage() {
 
   return (
     <Layout>
-      <section className="bg-primary-700 dark:bg-slate-900 text-white pt-16 pb-24">
-        <Container>
-          <Heading as="h1">Eventuras</Heading>
-          <Text>Eventuras for life</Text>
-        </Container>
-      </section>
+      <Hero />
       <section className="bg-primary-50 dark:bg-slate-950 pt-16 pb-24">
         <Container as="section">
           <Heading as="h2">Upcoming events</Heading>

@@ -24,6 +24,7 @@ export enum EnvironmentVariables {
 //all defaults should be a string as well!
 const defaults = {
   NEXT_PUBLIC_ORGANIZATION_ID: '1',
+  NEXT_PUBLIC_SITE_SETTINGS_URL: '',
 };
 
 class Environment {
@@ -75,6 +76,10 @@ class Environment {
 
   static get NEXT_PUBLIC_ORGANIZATION_ID() {
     return process.env.NEXT_PUBLIC_ORGANIZATION_ID ?? defaults.NEXT_PUBLIC_ORGANIZATION_ID;
+  }
+
+  static get NEXT_PUBLIC_SITE_SETTINGS_URL() {
+    return process.env.NEXT_PUBLIC_SITE_SETTINGS_URL ?? defaults.NEXT_PUBLIC_SITE_SETTINGS_URL;
   }
 }
 

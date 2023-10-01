@@ -6,6 +6,7 @@ import { RecoilRoot } from 'recoil';
 
 import NotificationsProvider from '@/app/NotificationsProvider';
 import { UserProvider } from '@/context';
+import { SiteProvider } from '@/context/SiteContext';
 import Environment from '@/utils/Environment';
 
 type ProvidersProps = {
@@ -23,10 +24,12 @@ export default function Providers({ children, session }: ProvidersProps) {
   OpenAPI.VERSION = Environment.NEXT_PUBLIC_API_VERSION;
   return (
     <RecoilRoot>
-      <NotificationsProvider />
-      <SessionProvider session={session}>
-        <UserProvider>{children}</UserProvider>
-      </SessionProvider>
+      <SiteProvider>
+        <NotificationsProvider />
+        <SessionProvider session={session}>
+          <UserProvider>{children}</UserProvider>
+        </SessionProvider>
+      </SiteProvider>
     </RecoilRoot>
   );
 }
