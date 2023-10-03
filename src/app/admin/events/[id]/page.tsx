@@ -8,7 +8,9 @@ import EventEmailer from '@/components/event/EventEmailer';
 import { Loading } from '@/components/feedback';
 import Button from '@/components/inputs/Button';
 import { Container, Drawer, Layout } from '@/components/layout';
-import { useEvent } from '@/hooks/apiHooks';
+import { useEvent, useRegistrations } from '@/hooks/apiHooks';
+
+import EventParticipantList from '../../components/EventParticipantList';
 
 type EventInfoProps = {
   params: {
@@ -23,18 +25,22 @@ type EventInfoProps = {
  */
 const EventDetailPage: React.FC<EventInfoProps> = ({ params }) => {
   const eventId = params.id;
+  const { registrations } = useRegistrations({
+    eventId,
+    includeUserInfo: true,
+  });
   const { t } = useTranslation('admin');
-  const { loading, event } = useEvent(eventId);
+  const { loading: eventsLoading, event } = useEvent(eventId);
   const [emailDrawerOpen, setEmailDrawerOpen] = useState<boolean>(false);
 
-  if (loading) {
+  if (eventsLoading) {
     return <Loading />;
   }
 
   return (
     <Layout>
       <Container>
-        {loading && <Loading />}
+        {eventsLoading && <Loading />}
         {event && (
           <>
             <Heading as="h1">{event.title ?? ''}</Heading>
@@ -64,6 +70,11 @@ const EventDetailPage: React.FC<EventInfoProps> = ({ params }) => {
               </Drawer.Footer>
             </Drawer>
           </>
+        )}
+        {event && registrations ? (
+          <EventParticipantList participants={registrations ?? []} event={event!} />
+        ) : (
+          <Loading />
         )}
       </Container>
     </Layout>
