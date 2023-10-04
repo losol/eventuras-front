@@ -4,7 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
 import EventEmailer from '@/components/event/EventEmailer';
-import { Container, Drawer, Layout } from '@/components/layout';
+import { Container, Drawer, Layout } from '@/components/ui';
 import Button from '@/components/ui/Button';
 import Heading from '@/components/ui/Heading';
 import Loading from '@/components/ui/Loading';

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { defaultInputStyle, InputDate, InputText } from '@/components/forms/Input';
-import { Layout } from '@/components/layout';
+import { Layout } from '@/components/ui';
 import Button from '@/components/ui/Button';
 import FatalError from '@/components/ui/FatalError';
 import Heading from '@/components/ui/Heading';

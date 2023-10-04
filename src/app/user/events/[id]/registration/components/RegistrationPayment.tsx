@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { defaultInputStyle, InputText } from '@/components/forms/Input';
-import Container from '@/components/layout/Container';
 import Button from '@/components/ui/Button';
+import Container from '@/components/ui/Container';
 import Heading from '@/components/ui/Heading';
 import PaymentFormValues from '@/types/PaymentFormValues';
 import { UserProfile } from '@/types/UserProfile';

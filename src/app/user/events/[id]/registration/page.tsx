@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { MutableRefObject, useContext, useRef, useState } from 'react';
 
-import { Layout } from '@/components/layout';
+import { Layout } from '@/components/ui';
 import FatalError from '@/components/ui/FatalError';
 import Loading from '@/components/ui/Loading';
 import { UserContext } from '@/context';

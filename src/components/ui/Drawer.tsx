@@ -1,7 +1,7 @@
 import { IconX } from '@tabler/icons-react';
 import React, { HTMLAttributes, ReactNode } from 'react';
 
-import { Portal } from '@/components/layout';
+import { Portal } from '@/components/ui';
 import Button from '@/components/ui/Button';
 import Heading from '@/components/ui/Heading';
 

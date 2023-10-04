@@ -7,7 +7,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
 import EventEmailer from '@/components/event/EventEmailer';
-import { Drawer } from '@/components/layout';
+import { Drawer } from '@/components/ui';
 import DataTable, { createColumnHelper } from '@/components/ui/DataTable';
 const columnHelper = createColumnHelper<EventDto>();
 interface AdminEventListProps {

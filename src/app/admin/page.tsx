@@ -4,7 +4,7 @@ import { UserDto } from '@losol/eventuras/models/UserDto';
 import useTranslation from 'next-translate/useTranslation';
 
 import { InputAutoComplete } from '@/components/forms/Input';
-import { Container, Layout } from '@/components/layout';
+import { Container, Layout } from '@/components/ui';
 import Heading from '@/components/ui/Heading';
 import Link from '@/components/ui/Link';
 import Loading from '@/components/ui/Loading';
