@@ -6,17 +6,19 @@ type StatusMap = {
 };
 
 const safeParse = async (response: Response, parseAsJson: boolean) => {
-  let parsedResponse = null;
-  try {
-    parsedResponse = parseAsJson ? response.json() : response.text();
-  } catch (error) {
+  const logParseError = (error: Error) => {
     Logger.error({ namespace: 'api' }, 'Trouble parsing result ', {
       statusCode: response.status,
       parseAsJson,
       error,
     });
+    return null;
+  };
+  if (parseAsJson) {
+    return response.json().catch(logParseError);
   }
-  return parsedResponse;
+
+  return response.text().catch(logParseError);
 };
 
 const statusMapper = {
