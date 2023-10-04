@@ -1,16 +1,27 @@
+import Logger from '../Logger';
 import ApiError from './ApiError';
 
 type StatusMap = {
   [status: number]: (response: Response) => Promise<any | string>;
 };
 
+const safeParse = async (response: Response, parseAsJson: boolean) => {
+  let parsedResponse = null;
+  try {
+    parsedResponse = parseAsJson ? response.json() : response.text();
+  } catch (error) {
+    Logger.error({ namespace: 'api' }, 'Trouble parsing result ', {
+      statusCode: response.status,
+      parseAsJson,
+      error,
+    });
+  }
+  return parsedResponse;
+};
+
 const statusMapper = {
-  200: (response: Response) => {
-    return response.json();
-  },
-  204: (response: Response) => {
-    return response.text();
-  },
+  200: (response: Response) => safeParse(response, true),
+  204: (response: Response) => safeParse(response, false),
   400: (response: Response) => {
     throw new ApiError({
       message: 'Api invalid request',
