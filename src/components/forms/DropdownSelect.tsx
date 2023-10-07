@@ -1,13 +1,60 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { IconCheck, IconSelector } from '@tabler/icons-react';
 import { Fragment } from 'react';
+import { Controller } from 'react-hook-form';
+
+export type DropdownSelectProps = {
+  className: string;
+  label: string;
+  name: string;
+  control: any; //grab from react-hook-form
+  errors: any; //grab from react-hook-form
+  rules: any; //grab from react-hook-form
+  options: any;
+};
+export default function DropdownSelect({
+  control,
+  options,
+  rules,
+  label,
+  className,
+  name,
+  errors,
+}: DropdownSelectProps) {
+  return (
+    <div className={className}>
+      <label htmlFor="statusSelector">{label}</label>
+      <Controller
+        control={control}
+        name={name}
+        rules={rules}
+        render={({ field: { onChange, onBlur, value } }) => {
+          return (
+            <Dropdown
+              id={name}
+              options={options}
+              onChange={onChange}
+              onBlur={onBlur}
+              selected={value ?? []}
+            />
+          );
+        }}
+      />
+      {errors[name] && (
+        <label htmlFor={name} role="alert" className="text-red-500">
+          {errors[name]?.message}
+        </label>
+      )}
+    </div>
+  );
+}
 
 export type DropdownOption = {
   id: string;
   label: string;
 };
 
-export type MultiSelectDropdownProps = {
+export type DropdownProps = {
   id: string;
   options: DropdownOption[];
   onChange: (selected: string[]) => void;
@@ -15,13 +62,7 @@ export type MultiSelectDropdownProps = {
   selected: string[]; //array of ids
 };
 
-export default function MultiSelectDropdown({
-  id,
-  options,
-  onChange,
-  onBlur,
-  selected = [],
-}: MultiSelectDropdownProps) {
+export function Dropdown({ id, options, onChange, onBlur, selected = [] }: DropdownProps) {
   return (
     <div id={id}>
       <Listbox value={selected} onChange={onChange} multiple>

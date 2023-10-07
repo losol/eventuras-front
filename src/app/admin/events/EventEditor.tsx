@@ -148,10 +148,21 @@ const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
             className={defaultInputStyle}
           />
           {eventinfo && (
-            <>
-              <InputDate label="Start date" {...register('dateStart')} />
-              <InputDate label="End date" {...register('dateEnd')} />
-            </>
+            <div>
+              <p>Event Dates</p>
+              <div className="flex direction-row">
+                <InputDate
+                  label="Start:"
+                  {...register('dateStart')}
+                  className="text-white bg-slate-700 p-2 m-2"
+                />
+                <InputDate
+                  label="End:"
+                  {...register('dateEnd')}
+                  className="text-white bg-slate-700 p-2 m-2"
+                />
+              </div>
+            </div>
           )}
         </fieldset>
 
