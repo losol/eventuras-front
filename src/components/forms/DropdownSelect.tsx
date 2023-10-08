@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import { Controller } from 'react-hook-form';
 
 export type DropdownSelectProps = {
+  multiSelect: boolean;
   className: string;
   label: string;
   name: string;
@@ -18,6 +19,7 @@ export default function DropdownSelect({
   rules,
   label,
   className,
+  multiSelect,
   name,
   errors,
 }: DropdownSelectProps) {
@@ -31,6 +33,7 @@ export default function DropdownSelect({
         render={({ field: { onChange, onBlur, value } }) => {
           return (
             <Dropdown
+              multiSelect={multiSelect}
               id={name}
               options={options}
               onChange={onChange}
@@ -56,24 +59,38 @@ export type DropdownOption = {
 
 export type DropdownProps = {
   id: string;
+  multiSelect: boolean;
   options: DropdownOption[];
-  onChange: (selected: string[]) => void;
+  onChange: (selected: string[] | string) => void;
   onBlur: (event: any) => void;
-  selected: string[]; //array of ids
+  selected: string[] | string; //array of ids for multiSelect
 };
 
-export function Dropdown({ id, options, onChange, onBlur, selected = [] }: DropdownProps) {
+export function Dropdown({
+  id,
+  options,
+  onChange,
+  multiSelect,
+  onBlur,
+  selected = multiSelect ? [] : options[0].id,
+}: DropdownProps) {
+  const renderSelection = () => {
+    if (multiSelect) {
+      const s = selected as string[];
+      const o = options as DropdownOption[];
+      return (s ?? []).map(id => o.filter(opt => opt.id === id)[0].label).join(', ');
+    }
+    return selected as string;
+  };
   return (
     <div id={id}>
-      <Listbox value={selected} onChange={onChange} multiple>
-        <div className="relative mt-1">
+      <Listbox value={selected} onChange={onChange} multiple={multiSelect}>
+        <div className="relative mt-1 text-black">
           <Listbox.Button
             onBlur={onBlur}
             className="relative border-2 bg-gray-100 w-full cursor-default bg-white py-4 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm"
           >
-            <span className="block truncate">
-              {(selected ?? []).map(id => options.filter(opt => opt.id === id)[0].label).join(', ')}
-            </span>
+            <span className="block truncate">{renderSelection()}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <IconSelector className="h-15 w-5 text-gray-400" aria-hidden="true" />
             </span>

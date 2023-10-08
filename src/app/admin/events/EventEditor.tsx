@@ -1,10 +1,11 @@
 'use client';
-import { EventDto, EventInfoStatus } from '@losol/eventuras';
+import { EventDto, EventInfoStatus, EventInfoType } from '@losol/eventuras';
 import { useRouter } from 'next/navigation';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import DropdownSelect from '@/components/forms/DropdownSelect';
 import { defaultInputStyle, InputDate, InputText } from '@/components/forms/Input';
 import { Layout } from '@/components/ui';
 import Button from '@/components/ui/Button';
@@ -13,6 +14,7 @@ import Heading from '@/components/ui/Heading';
 import ApiError from '@/utils/api/ApiError';
 import ApiResult from '@/utils/api/ApiResult';
 import { createEvent as postEvent, updateEvent } from '@/utils/api/functions/events';
+import { mapEnum } from '@/utils/enum';
 import Environment from '@/utils/Environment';
 import Logger from '@/utils/Logger';
 import slugify from '@/utils/slugify';
@@ -24,6 +26,7 @@ type EventFormValues = {
   organizationId: number;
   dateStart: any;
   dateEnd: any;
+  eventType: string;
 };
 
 const publishEvent = (formValues: EventFormValues, eventToUpdate: EventDto | null) => {
@@ -60,6 +63,7 @@ const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
   const {
     register,
     getValues,
+    control,
     setValue,
     formState: { errors },
     handleSubmit,
@@ -74,6 +78,7 @@ const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
       setValue('slug', eventinfo.slug ?? '');
       setValue('dateStart', eventinfo.dateStart ?? '');
       setValue('dateEnd', eventinfo.dateEnd ?? '');
+      //setValue('eventType',eventinfo.type ?? EventInfoType.COURSE)
     }
   }, [eventinfo, setValue]);
 
@@ -146,6 +151,19 @@ const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
             placeholder="Event Slug"
             errors={errors}
             className={defaultInputStyle}
+          />
+          <DropdownSelect
+            multiSelect={false}
+            className="relative z-10"
+            label="Event Type"
+            control={control}
+            rules={{ required: 'An Event Type is required' }}
+            name="eventType"
+            errors={errors}
+            options={mapEnum(EventInfoType, (value: any) => ({
+              id: value,
+              label: value,
+            }))}
           />
           {eventinfo && (
             <div>

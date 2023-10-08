@@ -94,10 +94,11 @@ export default function EventEmailer({
               id: value,
               label: value,
             }))}
+            multiSelect={true}
           />
           <DropdownSelect
             className="relative z-9"
-            label={t('eventEmailer.form.status.label')}
+            label={t('eventEmailer.form.type.label')}
             control={control}
             rules={{ required: t('eventEmailer.form.type.feedbackNoInput') }}
             name="registrationTypes"
@@ -106,6 +107,7 @@ export default function EventEmailer({
               id: value,
               label: value,
             }))}
+            multiSelect={true}
           />
         </>
       )}
