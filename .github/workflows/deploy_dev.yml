@@ -22,4 +22,4 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         run: |
           url="$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})"
-          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set "$url" $URL
+          vercel alias --scope${{ secrets.VERCEL_ORG_ID }} --token=${{ secrets.VERCEL_TOKEN }} set "$url" $URL
