@@ -30,6 +30,7 @@
     "@emotion/server": "^11.11.0",
     "@headlessui/react": "^1.7.17",
     "@losol/eventuras": "^0.3.2",
+    "@losol/scribo-markdown": "^0.1.8",
     "@next/bundle-analyzer": "^13.5.4",
     "@sentry/nextjs": "^7.73.0",
     "@tabler/icons-react": "^2.38.0",
