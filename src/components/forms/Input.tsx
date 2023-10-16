@@ -103,7 +103,7 @@ export type AutoCompleteDataProvider = (options: {
 
 export type InputAutoCompleteProps = {
   id: string;
-  resetAfterSelect?:boolean;
+  resetAfterSelect?: boolean;
   placeholder?: string;
   dataProvider: AutoCompleteDataProvider;
   minimumAmountOfCharacters: number;
@@ -132,8 +132,8 @@ export const InputAutoComplete = (props: InputAutoCompleteProps) => {
       (inputRef.current as any).value = selectedUser[props.labelProperty];
 
       if (props.onItemSelected) props.onItemSelected(selectedUser);
-      if(props.resetAfterSelect===true){
-        clearTextHandler()
+      if (props.resetAfterSelect === true) {
+        clearTextHandler();
       }
     }
   };
