@@ -11,28 +11,34 @@ import { useForm } from 'react-hook-form';
 
 import DropdownSelect from '@/components/forms/DropdownSelect';
 import { InputAutoComplete } from '@/components/forms/Input';
+import ProductSelection from '@/components/forms/ProductSelection';
 import Button from '@/components/ui/Button';
 import Heading from '@/components/ui/Heading';
 import { AppNotificationType, useAppNotifications } from '@/hooks/useAppNotifications';
+import { RegistrationProduct } from '@/types/RegistrationProduct';
 import { createEventRegistration } from '@/utils/api/functions/events';
 import { getUsers } from '@/utils/api/functions/users';
+import { mapEventProductsToView, mapSelectedProductsToQuantity } from '@/utils/api/mappers';
 import { mapEnum } from '@/utils/enum';
 
 type AddUserToEventFormValues = {
   registrationType: string;
+  products: any;
 };
 
 type AddUserCardProps = {
   user: UserDto;
   event: EventDto;
+  products: RegistrationProduct[];
   onRemove: (u: UserDto) => void;
 };
-const AddUserCard: React.FC<AddUserCardProps> = ({ user, event, onRemove }) => {
+const AddUserCard: React.FC<AddUserCardProps> = ({ user, event, products, onRemove }) => {
   const { addAppNotification } = useAppNotifications();
   const { t: common } = useTranslation('common');
 
   const {
     control,
+    register,
     setValue,
     formState: { errors },
     handleSubmit,
@@ -43,6 +49,7 @@ const AddUserCard: React.FC<AddUserCardProps> = ({ user, event, onRemove }) => {
   }, []);
 
   const onSubmitForm = async (values: AddUserToEventFormValues) => {
+    const productMap = mapSelectedProductsToQuantity(products, values.products);
     const newRegistration: NewRegistrationDto = {
       userId: user.id!,
       eventId: event.id!,
@@ -53,7 +60,8 @@ const AddUserCard: React.FC<AddUserCardProps> = ({ user, event, onRemove }) => {
         email: user.email,
       },
     };
-    const result = await createEventRegistration(newRegistration);
+    const result = await createEventRegistration(newRegistration, productMap);
+
     if (result.ok) {
       addAppNotification({
         id: Date.now(),
@@ -100,6 +108,12 @@ const AddUserCard: React.FC<AddUserCardProps> = ({ user, event, onRemove }) => {
         }))}
         multiSelect={false}
       />
+      {products.length > 0 && (
+        <>
+          <Heading as="h4">Choose Products</Heading>
+          <ProductSelection products={products} register={register} />
+        </>
+      )}
       <Button variant="light" type="submit">
         Add
       </Button>
@@ -118,7 +132,7 @@ export type AddUserToEventProps = {
   event: EventDto;
   eventProducts: ProductDto[];
 };
-const AddUserToEvent: React.FC<AddUserToEventProps> = ({ event }) => {
+const AddUserToEvent: React.FC<AddUserToEventProps> = ({ event, eventProducts }) => {
   const [usersToAdd, setUsersToAdd] = useState<UserDto[]>([]);
   return (
     <>
@@ -138,6 +152,7 @@ const AddUserToEvent: React.FC<AddUserToEventProps> = ({ event }) => {
         <AddUserCard
           user={user}
           event={event}
+          products={mapEventProductsToView(eventProducts)}
           key={user.id}
           onRemove={u => {
             setUsersToAdd([...usersToAdd].filter(us => u.id !== us.id));

@@ -49,8 +49,11 @@ const createRandomEvents = async (withProducts = true) => {
   if (result.ok) {
     console.log(result.value);
     const product = productBody();
+    const product2 = productBody();
     const res = await createProduct(result.value.id?.toString()!, product, init);
+    const res2 = await createProduct(result.value.id?.toString()!, product2, init);
     console.log(res);
+    console.log(res2);
   } else {
     console.log(result.error.statusCode, result.error.statusText, result.error);
   }
