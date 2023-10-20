@@ -30,7 +30,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@headlessui/react": "^1.7.17",
-    "@losol/eventuras": "^0.4.1",
+    "@losol/eventuras": "^0.4.2",
     "@next/bundle-analyzer": "^13.5.6",
     "@sentry/nextjs": "^7.74.1",
     "@tabler/icons-react": "^2.39.0",
