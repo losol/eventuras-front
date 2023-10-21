@@ -131,7 +131,7 @@ const AddUserCard: React.FC<AddUserCardProps> = ({
         type="reset"
         variant="light"
         onClick={() => {
-            onRemove(user);
+          onRemove(user);
         }}
       >
         Clear
