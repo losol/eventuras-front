@@ -78,7 +78,7 @@ type ApiState = {
 const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
   const { t } = useTranslation('admin');
   const { t: common } = useTranslation('common');
-
+  const formHook = useForm<EventFormValues>();
   const {
     register,
     getValues,
@@ -86,7 +86,7 @@ const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
     setValue,
     formState: { errors },
     handleSubmit,
-  } = useForm<EventFormValues>();
+  } = formHook;
 
   const router = useRouter();
   const [apiState, setApiState] = useState<ApiState>({ result: null, loading: false });
@@ -223,10 +223,10 @@ const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
             {...register('description', {
               required: 'Please provide a description of the event',
             })}
-            label="Description"
             placeholder="An Event Description here (markdown supported)"
             className={`${lightInputStyle}`}
             errors={errors}
+            defaultValue={eventinfo.description}
           />
           <InputText
             {...register('slug', {
