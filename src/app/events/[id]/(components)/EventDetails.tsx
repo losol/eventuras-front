@@ -27,7 +27,7 @@ export default function EventDetails({ eventinfo }: EventProps) {
           caption={eventinfo?.featuredImageCaption ?? ''}
         />
       ) : null}
-      {eventinfo?.moreInformation ? (
+      {eventinfo?.description ? (
         <>
           <Heading as="h2">{t('Description')}</Heading>
           {eventinfo.description ? compiler(eventinfo.description) : null}

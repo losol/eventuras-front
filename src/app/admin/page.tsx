@@ -2,7 +2,6 @@
 
 import useTranslation from 'next-translate/useTranslation';
 
-import MarkdownEditor from '@/components/forms/MarkdownEditor';
 import { Container, Layout } from '@/components/ui';
 import Heading from '@/components/ui/Heading';
 import Link from '@/components/ui/Link';
