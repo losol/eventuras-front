@@ -119,6 +119,7 @@ export default function EventEmailer({ eventTitle, eventId, onClose }: EventEmai
             label={t('eventEmailer.form.body.label')}
             placeholder={t('eventEmailer.form.body.label')}
             className={`${lightInputStyle}`}
+            editmodeOnly={true}
           />
         </div>
       </div>
