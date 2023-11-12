@@ -7,26 +7,28 @@ interface LinkProps {
   children?: React.ReactNode;
   className?: string;
   variant?:
-    | 'button-primary'
-    | 'button-secondary'
-    | 'button-light'
-    | 'button-outline'
-    | 'button-transparent';
+  | 'button-primary'
+  | 'button-secondary'
+  | 'button-light'
+  | 'button-outline'
+  | 'button-transparent';
   block?: boolean;
   bgDark?: boolean;
   stretch?: boolean;
+  "data-test-id"?: string
 }
 
-const Link: React.FC<LinkProps> = ({
-  href,
-  children,
-  className,
-  bgDark = false,
-  block = false,
-  variant,
-  stretch,
-}) => {
+const Link: React.FC<LinkProps> = (props) => {
   // Text color
+  const {
+    href,
+    children,
+    className,
+    bgDark = false,
+    block = false,
+    variant,
+    stretch,
+  } = props
   const textColor =
     bgDark || variant == 'button-primary' ? 'text-gray-200' : 'text-gray-800 dark:text-gray-200';
 
@@ -54,7 +56,7 @@ const Link: React.FC<LinkProps> = ({
   ].join(' ');
 
   return (
-    <NextLink className={classes} href={href}>
+    <NextLink className={classes} href={href} data-test-id={props['data-test-id']}>
       {children}
     </NextLink>
   );

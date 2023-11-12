@@ -29,14 +29,14 @@ const AppNotifications: React.FC<AppNotificationsProps> = ({
           {appNotifications.map(appNotification => (
             <div
               key={appNotification.id}
+              data-test-id={appNotification.type === 'success' ? 'notification-success' : 'notification-error'}
               className={`m-2 p-4 rounded shadow-lg 
-                            ${
-                              appNotification.type === 'success'
-                                ? 'bg-green-500 text-white'
-                                : appNotification.type === 'error'
-                                ? 'bg-red-500 text-white'
-                                : 'bg-blue-500 text-white'
-                            }`}
+                            ${appNotification.type === 'success'
+                  ? 'bg-green-500 text-white'
+                  : appNotification.type === 'error'
+                    ? 'bg-red-500 text-white'
+                    : 'bg-blue-500 text-white'
+                }`}
             >
               {appNotification.message}
             </div>

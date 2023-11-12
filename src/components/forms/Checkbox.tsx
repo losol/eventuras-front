@@ -76,6 +76,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>((props, ref) 
         ref={ref}
         disabled={disabled}
         defaultChecked={defaultChecked}
+        data-test-id={props['data-test-id']}
         {...oProps}
       />
       {enhancedChildren}

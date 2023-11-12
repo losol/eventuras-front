@@ -23,6 +23,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   bgDark?: boolean;
   variant?: 'primary' | 'secondary' | 'outline' | 'light' | 'transparent';
   block?: boolean;
+  'data-test-id'?: string
 }
 
 const Button: React.FC<ButtonProps> = props => {
@@ -54,6 +55,7 @@ const Button: React.FC<ButtonProps> = props => {
         aria-label={props.ariaLabel}
         onClick={props.onClick}
         className={buttonClassName}
+        data-test-id={props['data-test-id']}
       >
         {props.leftIcon && <span className={`mr-2 ${textColor}`}>{props.leftIcon}</span>}
         <span className={textColor}>{props.children}</span>
