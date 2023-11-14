@@ -1,5 +1,7 @@
 import NextLink from 'next/link';
 
+import { TEST_ID_ATTRIBUTE } from '@/utils/constants';
+
 import { buttonStyles } from './Button';
 
 interface LinkProps {
@@ -7,28 +9,20 @@ interface LinkProps {
   children?: React.ReactNode;
   className?: string;
   variant?:
-  | 'button-primary'
-  | 'button-secondary'
-  | 'button-light'
-  | 'button-outline'
-  | 'button-transparent';
+    | 'button-primary'
+    | 'button-secondary'
+    | 'button-light'
+    | 'button-outline'
+    | 'button-transparent';
   block?: boolean;
   bgDark?: boolean;
   stretch?: boolean;
-  "data-test-id"?: string
+  [TEST_ID_ATTRIBUTE]?: string;
 }
 
-const Link: React.FC<LinkProps> = (props) => {
+const Link: React.FC<LinkProps> = props => {
   // Text color
-  const {
-    href,
-    children,
-    className,
-    bgDark = false,
-    block = false,
-    variant,
-    stretch,
-  } = props
+  const { href, children, className, bgDark = false, block = false, variant, stretch } = props;
   const textColor =
     bgDark || variant == 'button-primary' ? 'text-gray-200' : 'text-gray-800 dark:text-gray-200';
 
@@ -56,7 +50,7 @@ const Link: React.FC<LinkProps> = (props) => {
   ].join(' ');
 
   return (
-    <NextLink className={classes} href={href} data-test-id={props['data-test-id']}>
+    <NextLink className={classes} href={href} data-test-id={props[TEST_ID_ATTRIBUTE]}>
       {children}
     </NextLink>
   );

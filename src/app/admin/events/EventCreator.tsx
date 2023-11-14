@@ -148,7 +148,7 @@ const EventCreator = () => {
         <Button
           loading={apiState.loading}
           type="submit"
-          data-test-id='create-event-submit-button'
+          data-test-id="create-event-submit-button"
           onClick={() => {
             //slugify slug before submitting
             setValue('slug', slugify(getValues('slug')));
