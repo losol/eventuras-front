@@ -45,11 +45,11 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     // Setup project
-    { name: 'setup', testMatch: /.*?\.setup\.ts/ },
+    { name: 'setup', testMatch: /.{0,100}\.setup\.ts/ },
 
     {
       name: 'e2e tests chromium',
-      testMatch: /.*?\.spec\.ts/,
+      testMatch: /.{0,100}\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         // Use prepared auth state.
