@@ -2,7 +2,7 @@
 
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
-dotenv.config()
+dotenv.config();
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -12,7 +12,7 @@ dotenv.config()
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const timeOut = 1000 * 60 * 5 //max 5 minutes for all
+const timeOut = 1000 * 60 * 5; //max 5 minutes for all
 export default defineConfig({
   timeout: timeOut,
   globalTimeout: timeOut,
@@ -45,19 +45,17 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     // Setup project
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    { name: 'setup', testMatch: /.*?\.setup\.ts/ },
 
     {
       name: 'e2e tests chromium',
-      testMatch: /.*\.spec\.ts/,
+      testMatch: /.*?\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         // Use prepared auth state.
         storageState: 'playwright-auth/user.json',
-
       },
       dependencies: ['setup'],
     },
-
-  ]
+  ],
 });
