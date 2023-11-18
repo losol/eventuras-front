@@ -6,6 +6,7 @@ import { useState } from 'react';
 import EventEmailer from '@/components/event/EventEmailer';
 import { Container, Drawer, Layout } from '@/components/ui';
 import Button from '@/components/ui/Button';
+import ButtonGroup from '@/components/ui/ButtonGroup';
 import Heading from '@/components/ui/Heading';
 import Link from '@/components/ui/Link';
 import Loading from '@/components/ui/Loading';
@@ -52,17 +53,21 @@ const EventDetailPage: React.FC<EventInfoProps> = ({ params }) => {
         {event && (
           <>
             <Heading as="h1">{event.title ?? ''}</Heading>
-            <Link href={`/admin/events/${event.id}/edit`} variant="button-primary">
-              {t('common:labels.edit')}
-            </Link>
-            <Button
-              variant="primary"
-              onClick={() => {
-                setEmailDrawerOpen(true);
-              }}
-            >
-              {t('admin:eventEmailer.title')}
-            </Button>
+
+            <ButtonGroup>
+              <Link href={`/admin/events/${event.id}/edit`} variant="button-primary">
+                {t('common:labels.edit')}
+              </Link>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  setEmailDrawerOpen(true);
+                }}
+              >
+                {t('admin:eventEmailer.title')}
+              </Button>
+            </ButtonGroup>
+
             <AddUserToEvent
               event={event}
               eventProducts={eventProducts}

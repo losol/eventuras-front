@@ -3,9 +3,10 @@ import React from 'react';
 import Loading from '@/components/ui/Loading';
 import { TEST_ID_ATTRIBUTE } from '@/utils/constants';
 
+import { BoxProps, mapToClassName } from './Box';
+
 export const buttonStyles = {
-  basePadding: 'px-4 py-2',
-  baseMargin: '',
+  defaultPadding: 'px-4 py-2',
   primary: 'font-bold bg-primary-600 dark:bg-primary-950 hover:bg-primary-700',
   secondary: 'border border-secondary-300 text-gray-700 hover:bg-secondary-100/10',
   light: 'bg-primary-100 text-gray-800 hover:bg-primary-200',
@@ -27,8 +28,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   [TEST_ID_ATTRIBUTE]?: string;
 }
 
-const Button: React.FC<ButtonProps> = props => {
-  const { variant = 'primary', bgDark = false, block = false } = props;
+const Button: React.FC<ButtonProps & BoxProps> = props => {
+  const { variant = 'primary', bgDark = false, block = false, ...boxProps } = props;
 
   let textColor;
   if (variant == 'primary' || bgDark) {
@@ -39,15 +40,14 @@ const Button: React.FC<ButtonProps> = props => {
 
   const blockClassName = block ? 'block' : '';
 
+  const spacingClassName = mapToClassName(boxProps, {
+    defaultPadding: buttonStyles.defaultPadding,
+    defaultMargin: 'm-1',
+  });
+
   const buttonClassName =
     props.className ||
-    [
-      buttonStyles.basePadding,
-      buttonStyles.baseMargin,
-      buttonStyles[variant],
-      blockClassName,
-      textColor,
-    ].join(' ');
+    [spacingClassName, buttonStyles[variant], blockClassName, textColor].join(' ');
 
   return (
     <div className="dark">

@@ -2,6 +2,7 @@ import NextLink from 'next/link';
 
 import { TEST_ID_ATTRIBUTE } from '@/utils/constants';
 
+import { BoxProps, mapToClassName } from './Box';
 import { buttonStyles } from './Button';
 
 interface LinkProps {
@@ -20,14 +21,29 @@ interface LinkProps {
   [TEST_ID_ATTRIBUTE]?: string;
 }
 
-const Link: React.FC<LinkProps> = props => {
+const Link: React.FC<LinkProps & BoxProps> = props => {
   // Text color
-  const { href, children, className, bgDark = false, block = false, variant, stretch } = props;
+  const {
+    href,
+    children,
+    className,
+    bgDark = false,
+    block = false,
+    variant,
+    stretch,
+    ...boxProps
+  } = props;
+
   const textColor =
     bgDark || variant == 'button-primary' ? 'text-gray-200' : 'text-gray-800 dark:text-gray-200';
 
   // Block classes
   const blockClasses = block ? 'block' : '';
+
+  const spacingClasses = mapToClassName(boxProps, {
+    defaultPadding: buttonStyles.defaultPadding,
+    defaultMargin: 'm-1',
+  });
 
   // Choose appropriate variant classes
   let variantClasses = '';
@@ -40,8 +56,7 @@ const Link: React.FC<LinkProps> = props => {
 
   // Combine all classes
   const classes = [
-    buttonStyles.basePadding,
-    buttonStyles.baseMargin,
+    spacingClasses,
     variantClasses,
     textColor,
     blockClasses,
