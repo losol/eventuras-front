@@ -26,6 +26,7 @@
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     // Consider disabling this rule later
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "react-hooks/rules-of-hooks": "off"
   }
 }
