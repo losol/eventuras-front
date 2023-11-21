@@ -59,7 +59,7 @@ interface UserProviderProps {
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [userState, setUserState] = useState<UserState>(defaultUserState);
   const { data: session } = useSession();
-
+  const sessionExists = session !== null;
   const updateUserProfile = (updatedProfile: UserProfile) => {
     setUserState(prevState => ({
       ...prevState,
@@ -102,13 +102,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       return result;
     }
     return null;
-  }, [session?.accessToken]);
-
+  }, [sessionExists]);
   useEffect(() => {
     if (session) {
       updateWithUserProfile();
     }
-  }, [session?.accessToken]);
+  }, [sessionExists]);
 
   return (
     <UserContext.Provider

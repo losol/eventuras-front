@@ -12,7 +12,7 @@ import DataTable, { createColumnHelper } from '@/components/ui/DataTable';
 import FatalError from '@/components/ui/FatalError';
 import Loading from '@/components/ui/Loading';
 import Pagination from '@/components/ui/Pagination';
-import createHook from '@/hooks/createHook';
+import useCreateHook from '@/hooks/createHook';
 import { createSDK } from '@/utils/api/EventurasApi';
 const columnHelper = createColumnHelper<EventDto>();
 interface AdminEventListProps {
@@ -23,7 +23,7 @@ const AdminEventList: React.FC<AdminEventListProps> = ({ organizationId }) => {
   const { t } = createTranslation();
   const [page, setPage] = useState(1);
   const sdk = createSDK({ inferUrl: { enabled: true, requiresToken: true } });
-  const { loading, result } = createHook(
+  const { loading, result } = useCreateHook(
     () =>
       sdk.events.getV3Events({
         organizationId,

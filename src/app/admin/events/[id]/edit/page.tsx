@@ -4,7 +4,7 @@ import createTranslation from 'next-translate/createTranslation';
 import EventEditor from '@/app/admin/events/EventEditor';
 import { Layout } from '@/components/ui';
 import Heading from '@/components/ui/Heading';
-import createHook from '@/hooks/createHook';
+import useCreateHook from '@/hooks/createHook';
 import { createSDK } from '@/utils/api/EventurasApi';
 
 type EditEventinfoProps = {
@@ -15,7 +15,7 @@ type EditEventinfoProps = {
 
 const EditEventinfo: React.FC<EditEventinfoProps> = ({ params }) => {
   const eventId = parseInt(params.id, 10);
-  const { result, loading } = createHook(
+  const { result, loading } = useCreateHook(
     () => createSDK().events.getV3Events1({ id: eventId }),
     [eventId]
   );

@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import Link from '@/components/ui/Link';
 import Loading from '@/components/ui/Loading';
 import { UserContext } from '@/context/UserContext';
-import createHook from '@/hooks/createHook';
+import useCreateHook from '@/hooks/createHook';
 import { createSDK } from '@/utils/api/EventurasApi';
 
 export type EventRegistrationButtonProps = {
@@ -17,24 +17,24 @@ export default function EventRegistrationButton({ eventId }: EventRegistrationBu
   const sdk = createSDK({ inferUrl: { enabled: true, requiresToken: true } });
   const state = useContext(UserContext).userState;
   const profile = state.profile;
+  const profileId: string | undefined = profile ? profile.id! : undefined;
   let isRegistered = false;
-  if (profile) {
-    const { loading, result } = createHook(
-      () =>
-        sdk.registrations.getV3Registrations({
-          userId: profile.id!,
-          includeEventInfo: true,
-          includeProducts: true,
-        }),
-      []
-    );
 
-    if (loading) return <Loading />;
-    if (result && result.data) {
-      isRegistered = result.data.filter(reg => reg.eventId === eventId).length > 0;
-    }
+  const { loading, result } = useCreateHook(
+    () =>
+      sdk.registrations.getV3Registrations({
+        userId: profileId,
+        includeEventInfo: true,
+        includeProducts: true,
+      }),
+    [profileId],
+    () => profileId === undefined
+  );
+
+  if (loading) return <Loading />;
+  if (result && result.data) {
+    isRegistered = result.data.filter(reg => reg.eventId === eventId).length > 0;
   }
-
   return (
     <>
       {isRegistered ? (

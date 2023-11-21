@@ -3,9 +3,10 @@ import { DependencyList, useEffect, useState } from 'react';
 
 import { apiWrapper } from '@/utils/api/EventurasApi';
 
-const createHook = <T>(
+const useCreateHook = <T>(
   fetchFunction: () => CancelablePromise<T>,
-  dependencies?: DependencyList | undefined
+  dependencies?: DependencyList | undefined,
+  skipIfTrue?: () => boolean | undefined
 ) => {
   const [result, setResult] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,9 +21,12 @@ const createHook = <T>(
       }
       setResult(null);
     };
+    if (skipIfTrue && skipIfTrue()) {
+      return;
+    }
     execute();
   }, dependencies ?? []);
   return { loading, result };
 };
 
-export default createHook;
+export default useCreateHook;

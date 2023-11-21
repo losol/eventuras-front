@@ -9,7 +9,7 @@ import Button from '@/components/ui/Button';
 import Heading from '@/components/ui/Heading';
 import Link from '@/components/ui/Link';
 import Loading from '@/components/ui/Loading';
-import createHook from '@/hooks/createHook';
+import useCreateHook from '@/hooks/createHook';
 import { createSDK } from '@/utils/api/EventurasApi';
 
 import AddUserToEvent from '../../components/AddUserToEvent';
@@ -32,15 +32,15 @@ const EventDetailPage: React.FC<EventInfoProps> = ({ params }) => {
 
   const { t } = createTranslation();
   const sdk = createSDK();
-  const { loading: eventsLoading, result: event } = createHook(
+  const { loading: eventsLoading, result: event } = useCreateHook(
     () => sdk.events.getV3Events1({ id: eventId }),
     [eventId]
   );
-  const { loading: loadingEventProducts, result: eventProducts } = createHook(
+  const { loading: loadingEventProducts, result: eventProducts } = useCreateHook(
     () => sdk.eventProducts.getV3EventsProducts({ eventId }),
     [eventId]
   );
-  const { result: registrations } = createHook(
+  const { result: registrations } = useCreateHook(
     () => sdk.registrations.getV3Registrations({ eventId, includeUserInfo: true }),
     [registrationSeed]
   );
