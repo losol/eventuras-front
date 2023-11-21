@@ -220,17 +220,14 @@ const EventEditor = ({ eventinfo: eventinfo }: EventEditorProps) => {
           <div className="mb-4">
             <p>Event Dates</p>
             <div className="flex direction-row">
-              {
-                //TODO should this be dateStart and dateEnd?
-              }
               <InputDate
                 label="Start:"
-                {...register('startDate')}
+                {...register('dateStart')}
                 className="text-white bg-slate-700 p-2 m-2"
               />
               <InputDate
                 label="End:"
-                {...register('endDate')}
+                {...register('dateEnd')}
                 className="text-white bg-slate-700 p-2 m-2"
               />
             </div>
