@@ -52,9 +52,15 @@ const registerForEvent = async (page: Page, eventId: string) => {
   await page.locator('[data-test-id="registration-country-input"]').fill('The Netherlands');
   await page.locator('[data-test-id="registration-payment-submit-button"]').click();
   await page.locator('[data-test-id="registration-complete-submit-button"]').click();
-  await page.goto(`/events/${eventId}/${eventSlug}`);
-  await page.locator('[data-test-id="event-registration-button"]').click();
-  await expect(page.locator('[data-test-id="already-registered-text"]')).toBeVisible();
+  await expect(page.locator('[data-test-id="registration-complete-confirmation"]')).toBeVisible();
+};
+
+const validateRegistration = async (page: Page, eventId: string) => {
+  await page.goto(`/user`);
+  await page.waitForLoadState('load');
+  await page.locator(`[data-test-id="${eventId}"]`).click();
+  await page.waitForLoadState('load');
+  await expect(page.locator('[data-test-id="registration-id-container"]')).toBeVisible();
 };
 
 test.describe('create event and register for it', () => {
@@ -67,5 +73,8 @@ test.describe('create event and register for it', () => {
 
   test('register for event', async ({ page }) => {
     await registerForEvent(page, eventId!);
+  });
+  test('validate event registration', async ({ page }) => {
+    await validateRegistration(page, eventId!);
   });
 });
