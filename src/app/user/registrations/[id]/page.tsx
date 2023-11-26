@@ -42,7 +42,7 @@ const UserRegistrationPage: React.FC<UserRegistrationPageProps> = async ({ param
             <Heading as="h2">{t('user:registration.products')}</Heading>
             <ul>
               {registration.products.map((product, index) => (
-                <li key={index}>
+                <li key={index} data-test-id={`product-container`}>
                   <p>{`${t('user:registration.product-name')}: ${product.product?.name}`}</p>
                   <p>{`${t('user:registration.product-description')}: ${product.product
                     ?.description}`}</p>
