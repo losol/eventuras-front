@@ -4,7 +4,7 @@ import { test } from '@playwright/test';
 
 import Logger from '@/utils/Logger';
 
-import { registerForEvent, validateRegistration } from './functions';
+import { checkIfLoggedIn, registerForEvent, validateRegistration } from './functions';
 
 test.describe.configure({ mode: 'serial' });
 const eventId: string | undefined = process.env.TEST_EVENT_ID;
@@ -17,6 +17,10 @@ test.describe('register for event', () => {
         'You need to specify TEST_EVENT_ID to test against in your environment'
       );
     }
+  });
+
+  test('check if logged in', async ({ page }) => {
+    await checkIfLoggedIn(page);
   });
 
   test('register for event', async ({ page }) => {

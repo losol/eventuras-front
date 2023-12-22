@@ -1,7 +1,44 @@
-import { expect, Page } from '@playwright/test';
+const ns = { namespace: 'e2e' };
+import { chromium, expect, Page, test as setup } from '@playwright/test';
 
 import Logger from '@/utils/Logger';
-const ns = { namespace: 'e2e' };
+
+import { fetchLoginCode } from './utils';
+
+export const authenticate = async (userName: string, authFile: string) => {
+  setup.use({
+    locale: 'en-GB',
+    timezoneId: 'Europe/Berlin',
+  });
+  setup('authenticate', async () => {
+    const browser = await chromium.launch();
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto('/');
+    await page.waitForLoadState('load');
+    await page.locator('[data-test-id="login-button"]').click();
+    await page.locator('[id="username"]').fill(userName);
+    await page.getByRole('button', { name: 'Continue', exact: true }).click();
+
+    const loginCode = await fetchLoginCode(userName);
+    await page.locator('[id="code"]').fill(loginCode!);
+    await page.getByRole('button', { name: 'Continue', exact: true }).click();
+
+    await page.waitForURL('/');
+
+    await page.goto('/user');
+    await page.waitForLoadState('networkidle');
+    await expect(page.getByText(userName).first()).toBeVisible();
+    await context.storageState({ path: authFile });
+    Logger.info({ namespace: 'testing.auth' }, 'Auth Complete');
+  });
+};
+
+export const checkIfLoggedIn = async (page: Page) => {
+  await page.goto('/user');
+  await page.waitForLoadState('networkidle');
+  await expect(page.locator('[data-test-id="profile-link"]')).toBeVisible();
+};
 
 export const checkIfAccessToAdmin = async (page: Page) => {
   Logger.info({ namespace: 'testing' }, 'admin access check');

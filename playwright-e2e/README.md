@@ -36,3 +36,7 @@ With the following Body:
 Confirm the role is added by creating a GET request:
 
 `{{baseUrl}}/v3/organizations/{{organizationId}}/members/{{targetUserId}}/roles`
+
+# To create a test account (user)
+
+To create a new user account and use it for automated testing, make sure it is registered first(manual process). Once this is done it can be setup in user.auth.setup.ts(it uses the environment variable, which can be changed accordingly).
