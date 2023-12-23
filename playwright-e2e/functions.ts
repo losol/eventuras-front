@@ -111,8 +111,7 @@ export const registerForEvent = async (page: Page, eventId: string) => {
   await expect(page.locator('[data-test-id="registration-complete-confirmation"]')).toBeVisible();
 };
 
-export const validateRegistration = async (page: Page, eventId: string) => {
-  Logger.info(ns, 'Registered for event, validating..');
+export const visitRegistrationPageForEvent = async (page: Page, eventId: string) => {
   await page.goto(`/user`);
   await page.waitForLoadState('load');
   const clickToUserEventPage = await page.locator(`[data-test-id="${eventId}"]`);
@@ -125,10 +124,24 @@ export const validateRegistration = async (page: Page, eventId: string) => {
   await clickToUserRegistrationPage.click();
   await page.waitForURL(userRegistrationUrl!);
   await page.waitForLoadState('load');
+};
+
+export const validateRegistration = async (page: Page, eventId: string) => {
+  Logger.info(ns, 'Registered for event, validating..');
+  await visitRegistrationPageForEvent(page, eventId);
   await expect(page.locator('[data-test-id="registration-id-container"]')).toBeVisible();
   Logger.info(
     ns,
     'Registration succesful, now making sure products were also registered correctly'
   );
   await expect(page.locator('[data-test-id="product-container"]')).toBeVisible();
+};
+
+export const editRegistrationOrders = async (page: Page, eventId: string) => {
+  await visitRegistrationPageForEvent(page, eventId);
+  await page.locator('[data-test-id="edit-orders-button"]').click();
+  expect(page.locator('[data-test-id="edit-orders-dialog"]')).toBeVisible();
+  await page.locator('[data-test-id="product-selection-checkbox"]').first().click();
+  await page.locator('[data-test-id="registration-customize-submit-button"]').click();
+  expect(page.locator('[data-test-id="notification-success"]')).toBeVisible();
 };
