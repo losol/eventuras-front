@@ -1,14 +1,9 @@
 /* eslint no-process-env: 0 */
 
 import { test } from '@playwright/test';
+import fs from 'fs';
 
-import {
-  addProductToEvent,
-  checkIfAccessToAdmin,
-  createEvent,
-  registerForEvent,
-  validateRegistration,
-} from './functions';
+import { addProductToEvent, checkIfAccessToAdmin, createEvent } from './functions';
 
 test.describe.configure({ mode: 'serial' });
 const eventName = `This is a playwright event - ${Math.floor(Date.now() / 1000 / 10)}`;
@@ -20,16 +15,11 @@ test.describe('create event and add products to it', () => {
   });
   test('create simple event', async ({ page }) => {
     eventId = await createEvent(page, eventName);
+    const eventToStore = JSON.stringify({ eventId });
+    fs.writeFileSync('./playwright-e2e/createdEvent.json', eventToStore);
   });
 
   test('add products to event', async ({ page }) => {
     await addProductToEvent(page, eventId);
-  });
-  test('register for event', async ({ page }) => {
-    await registerForEvent(page, eventId!);
-  });
-
-  test('validate event registration', async ({ page }) => {
-    await validateRegistration(page, eventId!);
   });
 });
