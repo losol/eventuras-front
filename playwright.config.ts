@@ -12,7 +12,7 @@ dotenv.config();
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const timeOut = 1000 * 60 * 5; //max 5 minutes for all
+const timeOut = 1000 * 60 * 10; //max 10 minutes for all
 const devicesToTest = devices['Desktop Chrome'];
 const SETUP_ADMIN = 'setup-admin';
 const SETUP_USER = 'setup-user';

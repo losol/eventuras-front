@@ -5,16 +5,19 @@ import dotenv from 'dotenv';
 import Logger from '@/utils/Logger';
 
 dotenv.config();
+
+export const getTagAndNamespaceFromEmail = (email: string) => {
+  const splitEmail: string[] = email.split('@')[0].split('.');
+  return { nameSpace: splitEmail[0], tag: splitEmail[1] };
+};
 export const fetchLoginCode = async (userEmail: string) => {
   Logger.info({ namespace: 'tests.utils' }, `Fetching login code for user ${userEmail}`);
-  const splitEmail: string[] = userEmail.split('@')[0].split('.');
   const APIKEY = process.env.TEST_EMAIL_APP_API_KEY;
-  const NAMESPACE = splitEmail[0];
-  const TAG = splitEmail[1];
+  const tagAndNs = getTagAndNamespaceFromEmail(userEmail);
   const result = await fetch(
-    `${
-      process.env.TEST_EMAIL_APP_API_URL
-    }/api/json?apikey=${APIKEY}&namespace=${NAMESPACE}&tag=${TAG}&limit=1&livequery=true&timestamp_from=${Date.now()}`
+    `${process.env.TEST_EMAIL_APP_API_URL}/api/json?apikey=${APIKEY}&namespace=${
+      tagAndNs.nameSpace
+    }&tag=${tagAndNs.tag}&limit=1&livequery=true&timestamp_from=${Date.now()}`
   ).then(r => r.json());
   if (result.emails.length === 0) {
     throw new Error(`No emails received for user ${userEmail}`);

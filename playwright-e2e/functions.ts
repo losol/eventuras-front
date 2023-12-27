@@ -92,14 +92,24 @@ export const addProductToEvent = async (page: Page, eventId: string) => {
   await expect(page.locator('[data-test-id="edit-product-button"]')).toBeVisible();
 };
 
-export const registerForEvent = async (page: Page, eventId: string) => {
-  Logger.info(ns, 'register for event', eventId);
+export const visitAndClickEventRegistrationButton = async (page: Page, eventId: string) => {
   await page.goto(`/events/${eventId}`);
   await page.waitForLoadState('load');
   await page.locator('[data-test-id="event-registration-button"]').click();
   Logger.info(ns, 'Reg button clicked, waiting for registration page');
+};
+
+export const registerForEvent = async (
+  page: Page,
+  eventId: string,
+  startFromHome: boolean = true
+) => {
+  if (startFromHome) {
+    await visitAndClickEventRegistrationButton(page, eventId);
+  }
   await page.waitForURL(`/user/events/${eventId}/registration`);
   Logger.info(ns, 'Registration page reached');
+  Logger.info(ns, 'register for event', eventId);
   await page.locator('[data-test-id="product-selection-checkbox"]').click();
   Logger.info(ns, 'Product checkbox clicked');
   const submitButton = await page.locator('[data-test-id="registration-customize-submit-button"]');
