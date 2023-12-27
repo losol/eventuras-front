@@ -7,6 +7,7 @@ import Logger from '@/utils/Logger';
 import createdEvent from './createdEvent.json';
 import { checkIfLoggedIn, registerForEvent, validateRegistration } from './functions';
 test.describe.configure({ mode: 'serial' });
+test.use({ storageState: 'playwright-auth/user.json' });
 
 test.describe('register for event', () => {
   test.beforeAll(() => {

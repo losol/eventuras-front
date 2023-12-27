@@ -40,6 +40,13 @@ export const checkIfLoggedIn = async (page: Page) => {
   await expect(page.locator('[data-test-id="profile-link"]')).toBeVisible();
 };
 
+export const checkIfUnAuthorized = async (page: Page, url: string) => {
+  await page.goto(url);
+  const location = `/api/auth/signin?callbackUrl=${encodeURIComponent(url)}`;
+  await page.waitForURL(location);
+  return expect(page).toHaveURL(location);
+};
+
 export const checkIfAccessToAdmin = async (page: Page) => {
   Logger.info({ namespace: 'testing' }, 'admin access check');
   await page.goto('/admin');
@@ -48,7 +55,6 @@ export const checkIfAccessToAdmin = async (page: Page) => {
 };
 
 export const createEvent = async (page: Page, eventName: string) => {
-  // page is authenticated
   Logger.info(ns, 'create simple event', eventName);
   await page.goto('/admin');
   await page.waitForLoadState('load');
@@ -142,6 +148,9 @@ export const editRegistrationOrders = async (page: Page, eventId: string) => {
   await page.locator('[data-test-id="edit-orders-button"]').click();
   expect(page.locator('[data-test-id="edit-orders-dialog"]')).toBeVisible();
   await page.locator('[data-test-id="product-selection-checkbox"]').first().click();
-  await page.locator('[data-test-id="registration-customize-submit-button"]').click();
-  expect(page.locator('[data-test-id="notification-success"]')).toBeVisible();
+  await Promise.all([
+    page.waitForResponse(resp => resp.url().includes('/products') && resp.status() === 200),
+    page.locator('[data-test-id="registration-customize-submit-button"]').click(),
+    expect(page.locator('[data-test-id="notification-success"]')).toBeVisible(),
+  ]);
 };
